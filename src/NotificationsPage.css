@@ -1,0 +1,74 @@
+/* src/NotificationsPage.css */
+.notifications-page {
+    padding: 0;
+  }
+  
+  .connection-requests-section,
+  .interactions-section {
+    margin-bottom: 40px;
+  }
+  
+  .connection-requests-section h3,
+  .interactions-section h3 {
+    margin-bottom: 20px;
+  }
+  
+  .connection-requests-section ul,
+  .interactions-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .connection-requests-section li,
+  .interactions-section li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .request-info {
+    flex-grow: 1;
+  }
+  
+  .request-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .request-actions button {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+  }
+  
+  .request-actions .view-profile {
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .request-actions button:first-of-type {
+    background-color: #4caf50;
+  }
+  
+  .request-actions button:last-of-type {
+    background-color: #f44336;
+  }
+  
+  .interactions-section li p {
+    margin: 5px 0;
+  }
+  
+  .interactions-section li span {
+    font-size: 0.8em;
+    color: #888;
+  }
+  
