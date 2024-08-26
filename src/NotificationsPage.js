@@ -7,39 +7,70 @@ function NotificationsPage() {
   const [interactions, setInteractions] = useState([]);
 
   useEffect(() => {
-    // Fetch the connection requests
-    const fetchConnectionRequests = async () => {
-      const data = await fetch('/api/connection-requests'); // Replace with actual API call
-      const result = await data.json();
-      setConnectionRequests(result);
+    // Simulate fetching connection requests with dummy data
+    const fetchConnectionRequests = () => {
+      const dummyConnectionRequests = [
+        {
+          id: 1,
+          name: 'John Doe',
+          position: 'Software Engineer',
+          company: 'Tech Solutions Inc.',
+        },
+        {
+          id: 2,
+          name: 'Jane Smith',
+          position: 'Product Manager',
+          company: 'Innovatech Co.',
+        },
+        {
+          id: 3,
+          name: 'Mark Johnson',
+          position: 'UX Designer',
+          company: 'Creative Labs',
+        },
+      ];
+      setConnectionRequests(dummyConnectionRequests);
     };
 
-    // Fetch the interaction notes and comments
-    const fetchInteractions = async () => {
-      const data = await fetch('/api/interactions'); // Replace with actual API call
-      const result = await data.json();
-      setInteractions(result);
+    // Simulate fetching interactions with dummy data
+    const fetchInteractions = () => {
+      const dummyInteractions = [
+        {
+          id: 1,
+          userName: 'Alice Brown',
+          postTitle: '5 Tips for Effective Teamwork',
+          comment: 'Great article! Thanks for sharing.',
+          timestamp: '2 hours ago',
+        },
+        {
+          id: 2,
+          userName: 'David Green',
+          postTitle: 'The Future of AI in Healthcare',
+          comment: 'Very informative. AI is truly changing the game.',
+          timestamp: '1 day ago',
+        },
+        {
+          id: 3,
+          userName: 'Emily White',
+          postTitle: 'How to Stay Productive While Working Remotely',
+          comment: 'This helped me a lot. Thanks!',
+          timestamp: '3 days ago',
+        },
+      ];
+      setInteractions(dummyInteractions);
     };
 
     fetchConnectionRequests();
     fetchInteractions();
   }, []);
 
-  const handleAcceptRequest = async (requestId) => {
-    // Handle accepting the request
-    await fetch(`/api/connection-requests/${requestId}/accept`, {
-      method: 'POST',
-    });
-    // Update state
+  const handleAcceptRequest = (requestId) => {
+    // Simulate accepting the request
     setConnectionRequests(connectionRequests.filter((req) => req.id !== requestId));
   };
 
-  const handleRejectRequest = async (requestId) => {
-    // Handle rejecting the request
-    await fetch(`/api/connection-requests/${requestId}/reject`, {
-      method: 'POST',
-    });
-    // Update state
+  const handleRejectRequest = (requestId) => {
+    // Simulate rejecting the request
     setConnectionRequests(connectionRequests.filter((req) => req.id !== requestId));
   };
 

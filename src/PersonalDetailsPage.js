@@ -41,6 +41,17 @@ function PersonalDetailsPage() {
 
   return (
     <div className="personal-details-container">
+        <nav className="top-navbar">
+        <ul>
+          <li><a href="/UserHomePage">Αρχική Σελίδα</a></li>
+          <li><a href="/NetworkPage">Δίκτυο</a></li>
+          <li><a href="/JobListingsPage">Αγγελίες</a></li>
+          <li><a href="/ConversationsPage">Συζητήσεις</a></li>
+          <li><a href="/NotificationsPage">Ειδοποιήσεις</a></li>
+          <li><a href="/PersonalDetailsPage">Προσωπικά Στοιχεία</a></li>
+          <li><a href="/SettingsPage">Ρυθμίσεις</a></li>
+        </ul>
+      </nav>
       <h2>Personal Details</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

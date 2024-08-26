@@ -12,62 +12,44 @@ function JobListingsPage() {
   const [applications, setApplications] = useState([]);
 
   useEffect(() => {
-    // Fetch job listings from connected professionals
-    const fetchConnectedJobListings = async () => {
-      const data = await fetch('/api/connectedJobListings'); // Replace with actual API call
-      const result = await data.json();
-      setConnectedJobListings(result);
-    };
+    // Dummy data for job listings from connected professionals
+    const connectedJobs = [
+      { id: 1, title: 'Frontend Developer', description: 'Develop and maintain web applications using React.js and other frontend technologies.' },
+      { id: 2, title: 'Backend Engineer', description: 'Design and implement scalable backend services using Node.js and Express.' },
+      { id: 3, title: 'Product Manager', description: 'Manage the product lifecycle from conception to launch.' },
+    ];
 
-    // Fetch job listings from non-connected professionals
-    const fetchNonConnectedJobListings = async () => {
-      const data = await fetch('/api/nonConnectedJobListings'); // Replace with actual API call
-      const result = await data.json();
-      setNonConnectedJobListings(result);
-    };
+    // Dummy data for job listings from non-connected professionals
+    const nonConnectedJobs = [
+      { id: 4, title: 'Graphic Designer', description: 'Create visual content for websites, logos, and marketing materials.' },
+      { id: 5, title: 'Data Scientist', description: 'Analyze and interpret complex data to help inform decision-making.' },
+      { id: 6, title: 'Marketing Specialist', description: 'Develop and execute marketing campaigns across multiple channels.' },
+    ];
 
-    fetchConnectedJobListings();
-    fetchNonConnectedJobListings();
+    // Simulating fetching data from an API
+    setConnectedJobListings(connectedJobs);
+    setNonConnectedJobListings(nonConnectedJobs);
   }, []);
 
   const handleApply = async (jobId) => {
     // Logic to apply for a job
-    const response = await fetch(`/api/applyForJob/${jobId}`, {
-      method: 'POST',
-    });
-    if (response.ok) {
-      alert('Application submitted successfully!');
-    } else {
-      alert('Failed to submit application.');
-    }
+    alert(`Applied for job ID: ${jobId}`);
   };
 
   const handlePostJob = async (e) => {
     e.preventDefault();
     // Logic to post a new job
-    const response = await fetch('/api/postJob', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newJob),
-    });
-    if (response.ok) {
-      alert('Job posted successfully!');
-      setNewJob({ title: '', description: '' }); // Clear the form
-    } else {
-      alert('Failed to post job.');
-    }
+    alert('Job posted successfully!');
+    setNewJob({ title: '', description: '' }); // Clear the form
   };
 
   const handleViewApplications = async (jobId) => {
     // Logic to view applications for a job
-    const data = await fetch(`/api/getApplications/${jobId}`); // Replace with actual API call
-    const result = await data.json();
-    setApplications(result);
+    alert(`Viewing applications for job ID: ${jobId}`);
   };
 
   return (
     <div className="job-listings-page">
-      {/* <h2>Job Listings</h2> */}
       <nav className="top-navbar">
         <ul>
           <li><a href="/UserHomePage">Αρχική Σελίδα</a></li>
@@ -132,9 +114,6 @@ function JobListingsPage() {
           ))}
         </div>
       </div>
-
-      {/* Placeholder for Matrix Factorization Collaborative Filtering */}
-      {/* TODO*/}
     </div>
   );
 }
