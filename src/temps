@@ -1,87 +1,73 @@
-/* src/JobListingsPage.css */
 .job-listings-page {
-  /* min-height: 120vh; */
+  min-height: 100vh;
   background-color: #f4f4f4;
+  padding-bottom: 20px;
 }
 
 .job-listings-page .job-posting-section {
-  margin: 0 28%;
-  min-width: 300px;
-}
-
-.job-listings-page .job-posting-section h3 {
-  font-size: 1.2rem;
-  margin-bottom: 12px;
-}
-
-.job-listings-page .job-posting-form {
   background-color: white;
-  border-radius: 8px;
   border: 1px solid #ccc;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  margin: 16px auto;
-  padding: 16px;
-}
-
-.job-listings-page .job-posting-form .form-group {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin: 16px 20%;
+  border-radius: 8px;
+  padding: 0 16px 16px;
   display: flex;
   flex-direction: column;
 }
 
-.job-listings-page .job-posting-form label {
-  font-size: 1rem;
-  margin-bottom: 4px;
-  color: #666;
+.job-listings-page .job-posting-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
 }
 
-.job-listings-page .job-posting-form input,
-.job-listings-page .job-posting-form textarea {
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  font-size: 0.9rem;
-  color: #333;
-  width: 100%;
-  box-sizing: border-box;
+.job-listings-page .job-posting-form .form-group {
+  margin-bottom: 15px;
+  margin: 0 16px;
+  width: 90%;
+}
+
+.job-listings-page .job-posting-form label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.job-listings-page .job-posting-section h3 {
+  /* color: red; */
+  text-align: left;
 }
 
 .job-listings-page .job-posting-form input {
-  height: 32px;
+  text-align: left;
+  background-color: white;
+  width: 50%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
+
 }
 
 .job-listings-page .job-posting-form textarea {
-  height: 80px;
-  resize: vertical;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
 }
 
 .job-listings-page .button-container {
   display: flex;
-  justify-content: center; 
-  margin-top: 16px;
+  justify-content: center;
 }
 
 .job-listings-page .button-container button {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background-color: #0073b1;
   width: 20%;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  background-color: #0073b1;
 }
 
 .job-listings-page .button-container button:hover {
   background-color: #005582;
-}
-
-.job-listings-page .connected-job-listings,
-.job-listings-page .non-connected-job-listings {
-  margin: 40px auto;
-  margin: 0 10%;
-  min-width: 300px;
-  padding-bottom: 20px;
 }
 
 .job-listings-page .job-list {
@@ -103,20 +89,13 @@
   margin-top: 0;
 }
 
-.job-listings-page .job-card .button-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 100px;
-}
-
 .job-listings-page .job-card button {
   margin-top: 10px;
   padding: 8px 12px;
   background-color: #0073b1;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 4px;
-  flex-grow: 1;
   cursor: pointer;
 }
 

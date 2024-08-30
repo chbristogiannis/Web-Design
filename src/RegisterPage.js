@@ -71,7 +71,7 @@ function RegisterPage() {
   };
 
   return (
-    <div className="register-page">  {/* Added this wrapper div */}
+    <div className="register-page"> 
       <div className="register-container">
         <h2>Sign Up</h2>
         {error && <p className="error-message">{error}</p>}

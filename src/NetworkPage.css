@@ -1,79 +1,91 @@
-/* src/NetworkPage.css */
+/* src/NetworkPage.css*/
 .network-page {
   height: 100vh;
   background-color: #f4f4f4;
 }
-  
-  .search-bar {
-    padding: 8px 10% 0 10%;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-  }
-  
-  .search-bar input {
-    width: 90%;
-    padding: 8px;
-    border-radius: 8px 0 0 8px;
-    border-width: 0.5px;
-  }
-  
-  .search-bar button {
-    padding: 8px 12px;
-    width: 10%;
-    border-radius: 0px;
-    cursor: pointer;
-    background-color: #0073b1;
-    border-radius: 0 8px 8px 0;
-  }
 
-  .search-bar button:hover {
-    background-color: #005582;
-  }
-  
-  .search-results ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .search-results li {
-    cursor: pointer;
-    padding: 10px;
-    background-color: #f0f0f0;
-    margin-bottom: 10px;
-  }
-  
-  .connected-professionals {
-    margin: 40px auto;
-    margin: 0 10%;
-    min-width: 300px;
-  }
-  
-  .professionals-grid {
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-  }
-  
-  .professional-card {
-    cursor: pointer;
-    border: 1px solid #ccc;
-    padding: 15px;
-    text-align: center;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .professional-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 50%;
-  }
-  
-  .professional-card h4 {
-    margin: 10px 0;
-  }
-  
+.network-page .search-bar {
+  padding: 8px 10% 0 10%;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
+
+.network-page .search-bar input {
+  width: 90%;
+  padding: 8px;
+  border-radius: 8px 0 0 8px;
+  border-width: 0.5px;
+}
+
+.network-page .search-bar button {
+  padding: 8px 12px;
+  width: 10%;
+  cursor: pointer;
+  background-color: #0073b1;
+  color: white;
+  border: none;
+  border-radius: 0 8px 8px 0;
+}
+
+.network-page .search-bar button:hover {
+  background-color: #005582;
+}
+
+.network-page .search-results ul {
+  list-style: none;
+  padding: 0;
+  margin: 40px auto;
+  margin: 0 10%;
+  min-width: 300px;
+}
+
+.network-page .search-results h3 {
+  margin: 0 10%;
+  padding-bottom: 10px;
+}
+
+.network-page .search-results li {
+  cursor: pointer;
+  padding: 10px;
+  /* // background-color: #f0f0f0;  */
+  background-color: white;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+.network-page .connected-professionals {
+  margin: 40px auto;
+  margin: 0 10%;
+  min-width: 300px;
+}
+
+.network-page .professionals-grid {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.network-page .professional-card {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 15px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.network-page .professional-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.network-page .professional-card h4 {
+  margin: 10px 0;
+}

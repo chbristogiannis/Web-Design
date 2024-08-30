@@ -1,0 +1,85 @@
+/* ManagerPage.css */
+.user-list-page {
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-list-page h2 {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user-item:hover {
+  background-color: #f1f1f1;
+}
+
+.user-item input[type="checkbox"] {
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.user-item span {
+  font-size: 18px;
+  color: #0073b1;
+  flex-grow: 1;
+  transition: color 0.2s;
+}
+
+.user-item span:hover {
+  color: #005582;
+  text-decoration: underline;
+}
+
+.export-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.export-buttons button {
+  padding: 12px 20px;
+  margin-right: 15px;
+  background-color: #0073b1;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.export-buttons button:hover {
+  background-color: #005582;
+}
+
+.export-buttons button:focus {
+  outline: none;
+}
+
+.export-buttons button:last-child {
+  margin-right: 0;
+}

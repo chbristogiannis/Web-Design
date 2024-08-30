@@ -1,32 +1,37 @@
-/* src/NotificationsPage.css */
+/* src/NotificationsPage.css*/
 .notifications-page {
   padding-bottom: 20px;
   background-color: #f4f4f4;
   min-height: 100vh;
 }
 
-.connection-requests-section,
-.interactions-section {
-  margin: 16px auto 40px auto;
-  padding: 20px;
+.notifications-page .connection-requests-section,
+.interactions-section {  
+  margin: 0 10%;
+  min-width: 300px;
+  padding-bottom: 20px;
+}
+
+.notifications-page .connection-requests-box,
+.interactions-box {
+  padding: 16px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 80%; /* Makes the boxes smaller on the x-axis */
 }
 
-.connection-requests-section h3,
+.notifications-page .connection-requests-section h3,
 .interactions-section h3 {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.connection-requests-section ul,
+.notifications-page .connection-requests-section ul,
 .interactions-section ul {
   list-style-type: none;
   padding: 0;
 }
 
-.connection-requests-section li,
+.notifications-page .connection-requests-section li,
 .interactions-section li {
   padding: 15px;
   margin-bottom: 15px;
@@ -38,16 +43,16 @@
   align-items: center;
 }
 
-.request-info {
+.notifications-page .request-info {
   flex-grow: 1;
 }
 
-.request-actions {
+.notifications-page .request-actions {
   display: flex;
   gap: 10px;
 }
 
-.request-actions button {
+.notifications-page .request-actions button {
   padding: 7px 15px;
   cursor: pointer;
   border: none;
@@ -55,27 +60,27 @@
   color: white;
 }
 
-.request-actions .view-profile {
+.notifications-page .request-actions .view-profile {
   padding: 7px 15px;
-  background-color: #0073b1;
+  background-color: #aaa;
   color: white;
   text-decoration: none;
   border-radius: 5px;
 }
 
-.request-actions button:first-of-type {
+.notifications-page .request-actions button:first-of-type {
   background-color: #0073b1;
 }
 
-.request-actions button:last-of-type {
+.notifications-page .request-actions button:last-of-type {
   background-color: #f44336;
 }
 
-.interactions-section li p {
+.notifications-page .interactions-section li p {
   margin: 5px 0;
 }
 
-.interactions-section li span {
+.notifications-page .interactions-section li span {
   font-size: 0.8em;
   color: #888;
 }

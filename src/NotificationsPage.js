@@ -90,42 +90,46 @@ function NotificationsPage() {
       
       <div className="connection-requests-section">
         <h3>Connection Requests</h3>
-        {connectionRequests.length > 0 ? (
-          <ul>
-            {connectionRequests.map((request) => (
-              <li key={request.id}>
-                <div className="request-info">
-                  <p>{request.name}</p>
-                  <p>{request.position} at {request.company}</p>
-                </div>
-                <div className="request-actions">
-                  <button onClick={() => handleAcceptRequest(request.id)}>Accept</button>
-                  <button onClick={() => handleRejectRequest(request.id)}>Reject</button>
-                  <a href={`/profile/${request.id}`} className="view-profile">View Profile</a>
-                </div>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No connection requests.</p>
-        )}
+        <div className="connection-requests-box">
+          {connectionRequests.length > 0 ? (
+            <ul>
+              {connectionRequests.map((request) => (
+                <li key={request.id}>
+                  <div className="request-info">
+                    <p>{request.name}</p>
+                    <p>{request.position} at {request.company}</p>
+                  </div>
+                  <div className="request-actions">
+                    <button onClick={() => handleAcceptRequest(request.id)}>Accept</button>
+                    <button onClick={() => handleRejectRequest(request.id)}>Reject</button>
+                    <a href={`/profile/${request.id}`} className="view-profile">View Profile</a>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No connection requests.</p>
+          )}
+        </div>
       </div>
 
       <div className="interactions-section">
         <h3>Interest Notes and Comments</h3>
-        {interactions.length > 0 ? (
-          <ul>
-            {interactions.map((interaction) => (
-              <li key={interaction.id}>
-                <p><strong>{interaction.userName}</strong> showed interest in your post: "{interaction.postTitle}"</p>
-                <p>Comment: {interaction.comment}</p>
-                <span>{interaction.timestamp}</span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No new interactions.</p>
-        )}
+        <div className="interactions-box">
+          {interactions.length > 0 ? (
+            <ul>
+              {interactions.map((interaction) => (
+                <li key={interaction.id}>
+                  <p><strong>{interaction.userName}</strong> showed interest in your post: "{interaction.postTitle}"</p>
+                  <p>Comment: {interaction.comment}</p>
+                  <span>{interaction.timestamp}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No new interactions.</p>
+          )}
+        </div>
       </div>
     </div>
   );

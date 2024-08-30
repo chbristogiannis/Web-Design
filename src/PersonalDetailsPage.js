@@ -40,8 +40,8 @@ function PersonalDetailsPage() {
   };
 
   return (
-    <div className="personal-details-container">
-        <nav className="top-navbar">
+    <div className="personal-details-page">
+      <nav className="top-navbar">
         <ul>
           <li><a href="/UserHomePage">Αρχική Σελίδα</a></li>
           <li><a href="/NetworkPage">Δίκτυο</a></li>
@@ -52,73 +52,83 @@ function PersonalDetailsPage() {
           <li><a href="/SettingsPage">Ρυθμίσεις</a></li>
         </ul>
       </nav>
-      <h2>Personal Details</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Professional Experience:</label>
-          <textarea
-            name="experience"
-            value={experience}
-            onChange={handleInputChange}
-            placeholder="Describe your professional experience"
-          />
-          <label>
-            Privacy:
-            <select
-              name="experience"
-              value={privacySettings.experience}
-              onChange={handlePrivacyChange}
-            >
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-            </select>
-          </label>
-        </div>
+      <div className="personal-details-box">
+        <h2>Personal Details</h2>
+        <div className="personal-details-container">
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <div className="privacy-container">
+                <label>Professional Experience:</label>
+                <label>
+                  Privacy:
+                  <select
+                    name="experience"
+                    value={privacySettings.experience}
+                    onChange={handlePrivacyChange}
+                  >
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                  </select>
+                </label>
+              </div>
+              <textarea
+                name="experience"
+                value={experience}
+                onChange={handleInputChange}
+                placeholder="Describe your professional experience"
+              />
+            </div>
 
-        <div className="form-group">
-          <label>Education:</label>
-          <textarea
-            name="education"
-            value={education}
-            onChange={handleInputChange}
-            placeholder="Describe your educational background"
-          />
-          <label>
-            Privacy:
-            <select
-              name="education"
-              value={privacySettings.education}
-              onChange={handlePrivacyChange}
-            >
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-            </select>
-          </label>
-        </div>
+            <div className="form-group">
+              <div className="privacy-container">
+                <label>Education:</label>
+                <label>
+                  Privacy:
+                  <select
+                    name="education"
+                    value={privacySettings.education}
+                    onChange={handlePrivacyChange}
+                  >
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                  </select>
+                </label>
+              </div>
+              <textarea
+                name="education"
+                value={education}
+                onChange={handleInputChange}
+                placeholder="Describe your educational background"
+              />
+            </div>
 
-        <div className="form-group">
-          <label>Skills:</label>
-          <textarea
-            name="skills"
-            value={skills}
-            onChange={handleInputChange}
-            placeholder="List your skills"
-          />
-          <label>
-            Privacy:
-            <select
-              name="skills"
-              value={privacySettings.skills}
-              onChange={handlePrivacyChange}
-            >
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-            </select>
-          </label>
-        </div>
+            <div className="form-group">
+              <div className="privacy-container">
+                <label>Skills:</label>
+                <label>
+                  Privacy:
+                  <select
+                    name="skills"
+                    value={privacySettings.skills}
+                    onChange={handlePrivacyChange}
+                  >
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                  </select>
+                </label>
+              </div>
+              <textarea
+                name="skills"
+                value={skills}
+                onChange={handleInputChange}
+                placeholder="List your skills"
+              />
+            </div>
 
-        <button type="submit">Save</button>
-      </form>
+            <button type="submit">Save</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

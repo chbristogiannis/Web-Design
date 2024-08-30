@@ -9,7 +9,7 @@ function JobListingsPage() {
     title: '',
     description: '',
   });
-  const [applications, setApplications] = useState([]);
+  // const [applications, setApplications] = useState([]);
 
   useEffect(() => {
     // Dummy data for job listings from connected professionals
@@ -95,8 +95,10 @@ function JobListingsPage() {
             <div key={job.id} className="job-card">
               <h4>{job.title}</h4>
               <p>{job.description}</p>
-              <button onClick={() => handleApply(job.id)}>Apply</button>
-              <button onClick={() => handleViewApplications(job.id)}>View Applications</button>
+              <div className="button-container">
+                <button onClick={() => handleApply(job.id)}>Apply</button>
+                <button onClick={() => handleViewApplications(job.id)}>View Applications</button>
+              </div>
             </div>
           ))}
         </div>

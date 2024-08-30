@@ -54,11 +54,9 @@ function SettingsPage() {
       </nav>
 
       <div className="settings-container">
-        <h2>Account Settings</h2>
-
-        {/* Change Email Section */}
+        <h3>Change Email Address</h3>
         <div className="settings-form-container">
-          <h3>Change Email Address</h3>
+          
           {emailError && <p className="error-message">{emailError}</p>}
           {emailSuccess && <p className="success-message">{emailSuccess}</p>}
           <form onSubmit={handleEmailSubmit}>
@@ -76,9 +74,9 @@ function SettingsPage() {
           </form>
         </div>
 
-        {/* Change Password Section */}
+        <h3>Change Password</h3>
         <div className="settings-form-container">
-          <h3>Change Password</h3>
+          
           {passwordError && <p className="error-message">{passwordError}</p>}
           {passwordSuccess && <p className="success-message">{passwordSuccess}</p>}
           <form onSubmit={handlePasswordSubmit}>

@@ -11,6 +11,8 @@ import ConversationsPage from './ConversationsPage';
 import NotificationsPage from './NotificationsPage';
 import PersonalDetailsPage from './PersonalDetailsPage';
 import SettingsPage from './SettingsPage';
+import UserDetailPage from './UserDetailPage';
+import ManagerPage from './ManagerPage';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/NotificationsPage" element={<NotificationsPage />} />
         <Route path="/PersonalDetailsPage" element={<PersonalDetailsPage />} />
         <Route path="/SettingsPage" element={<SettingsPage />} />
+        <Route path="/UserDetailPage" element={<UserDetailPage />} />
+        <Route path="/ManagerPage" element={<ManagerPage />} />
       </Routes>
     </Router>
   );
