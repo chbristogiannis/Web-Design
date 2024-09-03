@@ -1,18 +1,18 @@
 /* src/App.js */
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import WelcomePage from './WelcomePage';
-import RegisterPage from './RegisterPage';
-import LoginPage from './LoginPage';
-import UserHomePage from './UserHomePage';
-import NetworkPage from './NetworkPage';
-import JobListingsPage from './JobListingsPage';
-import ConversationsPage from './ConversationsPage';
-import NotificationsPage from './NotificationsPage';
-import PersonalDetailsPage from './PersonalDetailsPage';
-import SettingsPage from './SettingsPage';
-import UserDetailPage from './UserDetailPage';
-import ManagerPage from './ManagerPage';
+import WelcomePage from './pages/WelcomePage/WelcomePage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import UserHomePage from './pages/UserHomePage/UserHomePage';
+import NetworkPage from './pages/NetworkPage/NetworkPage';
+import JobListingsPage from './pages/JobListingsPage/JobListingsPage';
+import ConversationsPage from './pages/ConversationsPage/ConversationsPage';
+import NotificationsPage from './pages/NotificationsPage/NotificationsPage';
+import PersonalDetailsPage from './pages/PersonalDetailsPage/PersonalDetailsPage';
+import SettingsPage from './pages/SettingsPage/SettingsPage';
+import UserDetailPage from './pages/UserDetailPage/UserDetailPage';
+import ManagerPage from './pages/ManagerPage/ManagerPage';
 
 function App() {
   return (
