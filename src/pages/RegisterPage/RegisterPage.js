@@ -8,7 +8,7 @@ function RegisterPage() {
 
 	return (
 		<div className="register-page"> 
-		<div className="register-container">
+		<div className="box-container">
 			<h2>Sign Up</h2>
 			{error && <p className="error-message">{error}</p>}
 			<form onSubmit={handleSubmit} className="register-form">

@@ -2,4 +2,11 @@
     --background-color: #f0f0f0;
     --container-color: #f9f9f9;
     --container-border: 1px solid #ccc;
+
+
+    --primary-text-color: #333;
+
+
+    --buttton-bg-color: #0073b1;
+    --button-bg-color-hover: #005f8b;
 }

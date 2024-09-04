@@ -8,10 +8,10 @@ function LoginPage() {
 
 	return (
 		<div className="login-page">  
-			<div className="login-container">
+			<div className="box-container">
 				<h2>Login</h2>
 				{error && <p className="error-message">{error}</p>}
-				<form onSubmit={handleSubmit} className="login-form">
+				<form onSubmit={handleSubmit}>
 					<div className="form-group">
 						<label>Email:</label>
 						<input
