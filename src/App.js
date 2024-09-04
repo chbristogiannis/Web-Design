@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';  // Make sure Outlet is imported
 import { AuthProvider } from './context/AuthContext';  // AuthProvider wraps the app
-import PrivateRoute from './components/privateRoute';  // For protecting routes
+import PrivateRoute from './components/PrivateRoute';  // For protecting routes
 import WelcomePage from './pages/WelcomePage/WelcomePage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import LoginPage from './pages/LoginPage/LoginPage';
