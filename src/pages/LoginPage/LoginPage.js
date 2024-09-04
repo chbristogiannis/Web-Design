@@ -1,84 +1,54 @@
 /* src/LoginPage.js */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AuthContext from '../../context/AuthContext';  // Import the Auth context
 import './LoginPage.css';
 
 function LoginPage() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+	const { login } = useContext(AuthContext);  // Access the login function from context
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [error, setError] = useState(null);
 
-  const [error, setError] = useState('');
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+		try {
+			await login(email, password);  // Call login function from context
+		} catch (error) {
+			setError('Login failed. Please try again.');
+		}
+	};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Commenting out the backend check for now
-    /*
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        if (data.role === 'admin') {
-          // Redirect to the admin management page
-          window.location.href = '/admin';
-        } else {
-          // Redirect to the user's homepage
-          window.location.href = '/home';
-        }
-      } else {
-        setError('Invalid email or password.');
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    }
-    */
-
-    window.location.href = '/UserHomePage';
-  };
-
-  return (
-    <div className="login-page">  
-      <div className="login-container">
-        <h2>Login</h2>
-        {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-group">
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button type="submit">Login</button>
-        </form>
-      </div>
-    </div>
-  );
+	return (
+		<div className="login-page">  
+			<div className="login-container">
+				<h2>Login</h2>
+				{error && <p className="error-message">{error}</p>}
+				<form onSubmit={handleSubmit} className="login-form">
+					<div className="form-group">
+						<label>Email:</label>
+						<input
+							type="email"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							required
+						/>
+					</div>
+					<div className="form-group">
+						<label>Password:</label>
+						<input
+							type="password"
+							name="password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							required
+						/>
+					</div>
+					<button type="submit">Login</button>
+				</form>
+			</div>
+		</div>
+	);
 }
 
 export default LoginPage;

@@ -1,6 +1,7 @@
 /* src/App.js */
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';  // AuthProvider wraps the app
 import WelcomePage from './pages/WelcomePage/WelcomePage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -17,20 +18,23 @@ import ManagerPage from './pages/ManagerPage/ManagerPage';
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<WelcomePage />} />
-        <Route path="/Register" element={<RegisterPage />} />
-        <Route path="/Login" element={<LoginPage />} />
-        <Route path="/UserHomePage" element={<UserHomePage />} />
-        <Route path="/NetworkPage" element={<NetworkPage />} />
-        <Route path="/JobListingsPage" element={<JobListingsPage />} />
-        <Route path="/ConversationsPage" element={<ConversationsPage />} />
-        <Route path="/NotificationsPage" element={<NotificationsPage />} />
-        <Route path="/PersonalDetailsPage" element={<PersonalDetailsPage />} />
-        <Route path="/SettingsPage" element={<SettingsPage />} />
-        <Route path="/UserDetailPage" element={<UserDetailPage />} />
-        <Route path="/ManagerPage" element={<ManagerPage />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/Register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/UserHomePage" element={<UserHomePage />} />
+          <Route path="/NetworkPage" element={<NetworkPage />} />
+          <Route path="/JobListingsPage" element={<JobListingsPage />} />
+          <Route path="/ConversationsPage" element={<ConversationsPage />} />
+          <Route path="/NotificationsPage" element={<NotificationsPage />} />
+          <Route path="/PersonalDetailsPage" element={<PersonalDetailsPage />} />
+          <Route path="/SettingsPage" element={<SettingsPage />} />
+          <Route path="/UserDetailPage" element={<UserDetailPage />} />
+          <Route path="/ManagerPage" element={<ManagerPage />} />
+        </Routes>
+      </AuthProvider>
+
     </Router>
   );
 }
