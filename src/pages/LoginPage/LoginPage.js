@@ -1,31 +1,10 @@
 /* src/LoginPage.js */
-import React, { useState, useContext } from 'react';
-import AuthContext from '../../context/AuthContext';  // Import the Auth context
 import './LoginPage.css';
+import LoginPageController from './LoginPageController';
 
 function LoginPage() {
-	const { login } = useContext(AuthContext);  // Access the login function from context
-	const [formData, setFormData] = useState({
-		email: '',
-		password: '',
-	});
 
-	const [error, setError] = useState(null);
-
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormData({ ...formData, [name]: value });
-	};
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-
-		try {
-			await login(formData.email, formData.password);  // Call login function from context
-		} catch (error) {
-			setError('Login failed. Please try again.');
-		}
-	};
+	const { formData, error, handleChange, handleSubmit, goToRegisterPage } = LoginPageController();
 
 	return (
 		<div className="login-page">  
@@ -55,6 +34,11 @@ function LoginPage() {
 					</div>
 					<button type="submit">Login</button>
 				</form>
+				<div className="redirect-button-container">
+					<button onClick={goToRegisterPage}>
+						Not yet registered?
+					</button>
+				</div>
 			</div>
 		</div>
 	);

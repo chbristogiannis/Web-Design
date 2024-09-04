@@ -30,7 +30,7 @@ export const RegisterController = () => {
 
 		// Basic validation
 		if (formData.password !== formData.confirmPassword) {
-		    setError('Passwords do not match.');
+			setError('Passwords do not match.');
             return;
         }
 
@@ -62,16 +62,14 @@ export const RegisterController = () => {
             } else {
                 setError('Registration failed. Please try again.');
             }
-			// if (registerResponse.ok) {
-			// 	// Redirect to login or welcome page
-            //     navigate('/login');
-			// } else {
-			// 	setError('Registration failed. Please try again.');
-			// }
 		} catch (err) {
-		    setError('An error occurred. Please try again.');
+			setError('An error occurred. Please try again.');
 		}
 	};
 
-    return { formData, error, handleChange, handleFileChange, handleSubmit };
+    const goToLoginPage = () => {
+        navigate('/login');
+    };
+
+    return { formData, error, handleChange, handleFileChange, handleSubmit, goToLoginPage};
 }

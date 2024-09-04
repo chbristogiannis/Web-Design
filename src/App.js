@@ -16,6 +16,7 @@ import PersonalDetailsPage from './pages/PersonalDetailsPage/PersonalDetailsPage
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import UserDetailPage from './pages/UserDetailPage/UserDetailPage';
 import ManagerPage from './pages/ManagerPage/ManagerPage';
+import './styles/variables.css';
 
 function App() {
 	return (

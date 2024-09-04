@@ -4,7 +4,7 @@ import './RegisterPage.css';
 import { RegisterController } from './RegisterPageController';
 
 function RegisterPage() {
-	const { formData, error, handleChange, handleFileChange, handleSubmit } = RegisterController();
+	const { formData, error, handleChange, handleFileChange, handleSubmit, goToLoginPage} = RegisterController();
 
 	return (
 		<div className="register-page"> 
@@ -42,6 +42,11 @@ function RegisterPage() {
 				</div>
 				<button type="submit">Register</button>
 			</form>
+			<div className="redirect-button-container">
+				<button onClick={goToLoginPage}>
+					Already have an account?
+				</button>
+			</div>
 		</div>
 		</div>
 	);
