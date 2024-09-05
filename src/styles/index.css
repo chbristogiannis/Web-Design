@@ -16,7 +16,7 @@ code {
 	margin-top: 0.25rem;
 	button {
 		background-color: var(--container-color) !important;
-		color: var(--buttton-bg-color) !important;
+		color: var(--blue-color) !important;
 		border: none !important;
 		transition: 0.5s!important;
 
@@ -71,7 +71,7 @@ code {
 			padding: 0;
 		}
 		input[type="file"]::file-selector-button {
-			background-color: var(--buttton-bg-color);
+			background-color: var(--blue-color);
 			border: none;
 			border-radius: 0.5rem;
 			color: white;
@@ -87,7 +87,7 @@ code {
 	}
 
 	button {
-		background-color: var(--buttton-bg-color);
+		background-color: var(--blue-color);
 		border: none;
 		border-radius: 8px;
 		color: white;
@@ -104,3 +104,34 @@ code {
 		}
 	}
 }
+
+.top-navbar {
+	background-color: var(--blue-color);
+	padding: 1rem;
+	text-decoration: none;
+
+	ul {
+		list-style-type: none;
+		display: flex;
+		justify-content: space-around;
+		margin: 0;
+		padding: 0;
+
+		li {
+			display: inline;
+			a {
+				font-size: 1.125rem;
+				color: white;
+				text-decoration: none;
+			}
+
+			a.active-link {
+				font-size: 1.125rem;
+				text-decoration: underline;
+				color: white;
+			}
+		}
+	}
+}
+
+
