@@ -38,7 +38,7 @@ function RegisterPage() {
 				</div>
 				<div className="form-group">
 					<label>Profile Picture:</label>
-					<input type="file" name="profilePicture" onChange={handleFileChange} accept="image/*" />
+					<input type="file" name="photo" onChange={handleFileChange} accept="image/*" />
 				</div>
 				<button type="submit">Register</button>
 			</form>

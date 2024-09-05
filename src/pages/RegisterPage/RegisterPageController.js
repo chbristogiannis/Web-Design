@@ -12,7 +12,7 @@ export const RegisterController = () => {
         password: '',
         confirmPassword: '',
         phoneNumber: '',
-        profilePicture: null,
+        photo: '',
     });
     const [error, setError] = useState('');
 
@@ -22,7 +22,7 @@ export const RegisterController = () => {
 	};
 
 	const handleFileChange = (e) => {
-		setFormData({ ...formData, profilePicture: e.target.files[0] });
+		setFormData({ ...formData, photo: e.target.files[0] });
 	};
 
 	const handleSubmit = async (e) => {
@@ -41,20 +41,14 @@ export const RegisterController = () => {
 				formDataObj.append(key, formData[key]);
 			});
 
-			// const registerResponse = await fetch('/auth/register', {
-			// 	method: 'POST',
-			// 	body: formDataObj,
-			// });
+            if (formData.profilePicture) {
+                formDataObj.append('photo', formData.profilePicture);
+            }
 
-            console.log(formData.phoneNumber);
-
-            const response = await axiosInstance.post('/auth/register', {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                email: formData.email,
-                password: formData.password,
-                phoneNumber: formData.phoneNumber,
-                profilePicture: formData.profilePicture,
+            const response = await axiosInstance.post('/auth/register', formDataObj, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             });
 
             if (response.status === 201) {

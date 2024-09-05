@@ -2,6 +2,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { login as loginService, logout as logoutService } from '../services/authServices';  // Import login, logout services
 import { useNavigate } from 'react-router-dom';
+import { User } from '../models/User';
 
 // Create the AuthContext
 const AuthContext = createContext();
@@ -32,7 +33,6 @@ export const AuthProvider = ({ children }) => {
 		try {
 			const data = await loginService(email, password);  // Call login service
 			setIsAuthenticated(true);
-			setUser(data.user);  // Set user info from the response
 			navigate('/UserHomePage');  // Redirect to dashboard after login
 		} catch (error) {
 			throw error;  // Let the calling component handle the error
