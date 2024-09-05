@@ -33,6 +33,9 @@ code {
 	border-radius: 1rem;
 	box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1);
 	padding: 2rem;
+}
+
+.form-container {
 	width: 40vw;
 	max-width: 450px;
 
@@ -70,6 +73,7 @@ code {
 			border: none;
 			padding: 0;
 		}
+
 		input[type="file"]::file-selector-button {
 			background-color: var(--blue-color);
 			border: none;

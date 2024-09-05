@@ -8,7 +8,7 @@ function LoginPage() {
 
 	return (
 		<div className="login-page">  
-			<div className="box-container">
+			<div className="box-container form-container">
 				<h2>Login</h2>
 				{error && <p className="error-message">{error}</p>}
 				<form onSubmit={handleSubmit}>
