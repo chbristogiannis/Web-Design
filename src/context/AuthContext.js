@@ -1,5 +1,5 @@
 // src/context/AuthContext.js
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { login as loginService, logout as logoutService } from '../services/authServices';  // Import login, logout services
 import { useNavigate } from 'react-router-dom';
 import { User } from '../models/User';
@@ -13,26 +13,57 @@ export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);                         // Stores user info
 	const navigate = useNavigate();
 
+
+	const validateUser = (userData) => {
+        return userData && userData.firstName && userData.lastName && userData.hasPhoto;
+    };
+
 	// Check if the user is authenticated on initial render
 	useEffect(() => {
 		const token = localStorage.getItem('token');
+		const storedUser = localStorage.getItem('user');
 
 		if (token) {
-		// If a token exists, assume the user is logged in
-			setIsAuthenticated(true);
+			if (storedUser) {
+				const userInfo = JSON.parse(storedUser);
 
-		// Optionally you can call an API to get user info here
-		// setUser(userInfoFromAPI);
+				if(validateUser(userInfo)) {
+					setIsAuthenticated(true);
+					setUser(JSON.parse(storedUser));  // Restore user from localStorage
+				}
+				else {
+					logout();
+				}
+            } else {
+				logout();
+			}
+		} else {
+			logout();
 		}
-		
 		setLoading(false);  // Stop loading whether token exists or not
 	}, []);
 
-		// Function to log in the user
+	// Function to log in the user
 	const login = async (email, password) => {
 		try {
-			const data = await loginService(email, password);  // Call login service
+			const response = await loginService(email, password);  // Call login service
+			const token = response.token;
+			const userInfo = response.userInfo;
+
+			if (!token || !userInfo) {
+				throw new Error('Invalid response from server');
+			}
+
+			if(!userInfo.hasPhoto) {
+				userInfo.photo = 'https://via.placeholder.com/100';
+			}
+
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(userInfo));
+
 			setIsAuthenticated(true);
+			setUser(new User(userInfo.firstName, userInfo.lastName, userInfo.hasPhoto, userInfo.photo));
+
 			navigate('/UserHomePage');  // Redirect to dashboard after login
 		} catch (error) {
 			throw error;  // Let the calling component handle the error
@@ -41,17 +72,20 @@ export const AuthProvider = ({ children }) => {
 
 	// Function to log out the user
 	const logout = () => {
-		logoutService();  // Call logout service to clear token
+		logoutService();  // Call logout service to clear token amn user
 		setIsAuthenticated(false);
 		setUser(null);
+
 		navigate('/login');  // Redirect to login page after logout
 	};
 
 	return (
 		<AuthContext.Provider value={{ isAuthenticated, user, login, logout, loading }}>
-		{children}
+			{children}
 		</AuthContext.Provider>
 	);
 };
+
+export const useAuth = () => useContext(AuthContext);
 
 export default AuthContext;

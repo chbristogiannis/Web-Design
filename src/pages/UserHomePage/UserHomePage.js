@@ -1,30 +1,30 @@
 // src/UserHomePage.js
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';  // Adjust the import path
 import './UserHomePage.css';
 
 function HomePage() {
-  const [userData, setUserData] = useState({
-    name: 'John Smith',
-    jobTitle: 'Software Engineer',
-    employer: 'Tech Corp',
-    profilePicture: 'https://via.placeholder.com/100'
-  });
+  const {user, isAuthenticated, loading} = useAuth();
+
+  // const [userData, setUserData] = useState({
+  //   fullName: user.firstName + ' ' + user.lastName,
+  //   photo: user.photo || 'https://via.placeholder.com/100',
+  // });
+
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+
+  //     setUserData(userData);
+  //   };
+
+  //   fetchUserData();
+  // }, []);
 
   useEffect(() => {
-    // Simulating a fetch call to the backend
-    // Replace this with an actual fetch/axios call to your backend
-    const fetchUserData = async () => {
-      // Simulated user data
-      const data = {
-        name: 'John Smith',
-        profilePicture: 'https://via.placeholder.com/100'
-      };
-
-      setUserData(data);
-    };
-
-    fetchUserData();
-  }, []);
+        if (loading) {
+            // Handle loading state (e.g., show a loader)
+        }
+    }, [loading]);
 
   return (
     <div className="homepage-container">
@@ -45,11 +45,11 @@ function HomePage() {
           <div className="user-info">
             <div className="user-profile">
               <img
-                src={userData.profilePicture}
+                src={user.photo}
                 alt="Profile"
                 className="profile-picture"
               />
-              <h3>{userData.name}</h3>
+              <h3>{user.firstName}</h3>
             </div>
             <h3>Προσωπικά Στοιχεία</h3>
             <p><a href="/PersonalDetailsPage">Δείτε το προφίλ σας</a></p>
