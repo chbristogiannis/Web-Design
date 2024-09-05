@@ -1,12 +1,12 @@
 :root {
-    --background-color: #f0f0f0;
-    --container-color: #f9f9f9;
-    --container-border: 1px solid #ccc;
-
+    --background-color: #F6F5F5;
+    --container-color: #fbfbfb;
+    --container-border-color: #ccc;
+    --container-border: 1px solid var(--container-border-color);
 
     --primary-text-color: #333;
 
 
-    --blue-color: #0073b1;
-    --button-bg-color-hover: #005f8b;
+    --blue-color: #295F98;
+    --button-bg-color-hover: #0f4681;
 }

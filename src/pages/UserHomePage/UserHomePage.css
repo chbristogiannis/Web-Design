@@ -1,143 +1,77 @@
 /* src/UserHomePage.css*/
 .homepage-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background-color: #f4f4f4;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100vw;
+	background-color: var(--background-color);
+
+	.content-container {
+		display: flex;
+		justify-content: center;
+		padding: 2rem 5rem 1rem 5rem;
+	}
+
+	.left-sidebar {
+		min-width: fit-content;
+		margin-top: 1rem;
+		padding: 3rem;
+		text-align: center;
+		height: fit-content;
+
+		h3 {
+			font-size: 1.125rem;
+			margin-top: 1rem;
+			color: var(--primary-text-color);
+			margin-bottom: 0.2rem;
+		}
+	}
+
+	.main-content {
+		padding: 1rem;
+	}
+
 }
 
-.content-container {
-  display: flex;
-  flex: 1;
-  padding: 1rem;
+.post-container {
+	width: 50vw;
+	margin-bottom: 2rem;
+
+	.media-upload {
+		display: flex;
+		gap: 2rem;
+		justify-content: space-between;
+		margin-top: 0.5rem;
+	}
+	
+	.post-user-container {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+	}
+
+	.post-actions {
+		display: flex;
+		gap: 1rem;
+		margin-top: .5rem;
+	}
+
+	.post-body {
+		border-bottom: 1px solid #999999;
+	}
 }
 
-.homepage-container .left-sidebar {
-  width: 250px;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 1rem;
-  background-color: white;
-  text-align: center;
-}
+.custom-button {
+	color: white !important;
+	padding: 0.5rem 2rem 0.5rem 2rem !important;
+	font-size: 1.125rem !important;
+	font-weight: 500 !important;
+	background-color: var(--blue-color) !important;
+	border-radius: 1.5rem !important;
+	border: none !important;
+	transition: 0.5s !important;
 
-.homepage-container .left-sidebar h3 {
-  margin-top: 0rem;
-}
-
-.homepage-container .left-sidebar h3 {
-  margin-bottom: 0.2rem;
-}
-
-.homepage-container .left-sidebar p {
-  margin-top: 0.2rem;
-}
-
-.homepage-container .left-sidebar a {
-  text-decoration: none;
-  color: #0073b1;
-  font-size: 0.9rem;
-}
-
-.homepage-container .left-sidebar .user-info,
-.left-sidebar .user-network {
-  margin-bottom: 1rem;
-}
-
-.homepage-container .left-sidebar .user-profile {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.homepage-container .profile-picture {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.homepage-container .left-sidebar a {
-  text-decoration: none;
-  color: #0073b1;
-}
-
-.homepage-container .main-content {
-  flex: 1;
-  padding: 1rem;
-}
-
-.timeline {
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 1rem;
-  border-radius: 5px;
-  width: 70vw;
-}
-
-.homepage-container .timeline h3 {
-  margin-top: 0;
-}
-
-.homepage-container .post-creation {
-  margin-bottom: 2rem;
-}
-
-.homepage-container .post-creation textarea {
-  width: 98.5%;
-  height: 100px;
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  resize: none;
-}
-
-.homepage-container .media-upload {
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-
-.homepage-container .media-upload button,
-.submit-post {
-  padding: 0.5rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #0073b1;
-  color: white;
-  cursor: pointer;
-  margin-top: 0.5rem;
-}
-
-.homepage-container .media-upload button:hover,
-.submit-post:hover {
-  background-color: #005582;
-}
-
-.homepage-container .posts {
-  margin-top: 2rem;
-}
-
-.homepage-container .post {
-  padding: 1rem;
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-}
-
-.homepage-container .post-actions button {
-  margin-right: 1rem;
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #0073b1;
-  color: white;
-  cursor: pointer;
-}
-
-.homepage-container .post-actions button:hover {
-  background-color: #005582;
+	&:hover {
+		background-color: var(--button-bg-color-hover) !important;
+	}
 }
