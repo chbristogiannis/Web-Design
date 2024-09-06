@@ -1,5 +1,4 @@
 import axiosInstance from '../utils/axiosInstance';
-import { User } from '../models/User';
 
 const login = async (email, password) => {
 	try {
