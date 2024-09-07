@@ -6,24 +6,55 @@ import { useNavigate } from 'react-router-dom';
 import AutoResizingTextArea from '../../components/AutoResizingTextArea';  // Adjust the import path
 import Navbar from '../../components/NavBar';  // Adjust the import path
 import DeleteButton from '../../components/Delete-Button';
+import Spinner from '../../components/Spinner'; // Import the Spinner component
 
-import { createPost , getPosts, likePost } from '../../services/postServices';
+import { createPost , getPosts, likePost, commentPost, getPostComments } from '../../services/postServices';
 
 import './UserHomePage.css';
 
-
 import blankPage from '../../assets/blank-page.png';
 
-
 function HomePage() {
-	const {user, isAuthenticated, loading} = useAuth();
+	const {user, isAuthenticated, loading: authLoading} = useAuth();
+	const navigate = useNavigate();
 
 	const fileInputRef = useRef(null);
-	const textInputRef = useRef(null);
+	const commentsContainerRef = useRef(null);
 
 	const [text, setText] = useState('');
 	const [fileName, setFileName] = useState('');
-	const navigate = useNavigate();
+	const [commentText, setCommentText] = useState('');
+	const [commentFocus, setCommentFocus] = useState(-1);
+	
+	const [posts, setPosts] = useState([]);  // State for storing posts
+	const [comments, setComments] = useState([]);  // State for storing comments
+	const [loading, setLoading] = useState(true);  // New loading state for fetching posts
+
+
+	// Fetch posts from API on component mount
+	useEffect(() => {
+		const fetchPosts = async () => {
+				setLoading(true);  // Start loading
+				const response = await getPosts();
+				const mappedResponse = response.map(post => {
+					let { id, text, file, firstName, lastName, photo } = post;
+					if (photo === null) {
+						photo = 'https://via.placeholder.com/100';
+					}
+					return { id, text, file, firstName, lastName, photo };
+				});
+				await setPosts(mappedResponse);  // Update state with posts
+				setLoading(false);  // Stop loading
+			};
+
+		fetchPosts();
+	}, []);
+
+	useEffect(() => {
+        if (commentsContainerRef.current) {
+            commentsContainerRef.current.scrollTop = commentsContainerRef.current.scrollHeight;
+        }
+    }, [comments]);
 
 	const handleChange = (event) => {
     	setText(event.target.value); // Update the value state
@@ -36,7 +67,22 @@ function HomePage() {
 		if (fileInputRef.current) {
 			fileInputRef.current.value = ''; // Reset the file input value
 		}
-	}; 
+	};
+
+	const refreshPosts = async () => {
+		setLoading(true);  // Start loading
+		const response = await getPosts();
+		const mappedResponse = response.map(post => {
+			let { id, text, file, firstName, lastName, photo } = post;
+			if (photo === null) {
+				photo = 'https://via.placeholder.com/100';
+			}
+			return { id, text, file, firstName, lastName, photo };
+		});
+		setPosts(mappedResponse);  // Update state with posts
+		setLoading(false);  // Start loading
+
+	};
 
 	const mediaButtonClicked = () => {
 		fileInputRef.current.click();
@@ -46,29 +92,130 @@ function HomePage() {
 		if ( event.target.files[0]) {
 			const file = event.target.files[0]; // Access the selected file
 			setFileName(file.name); // Update the file name state
-			console.log(file.name);
 		}
 	}
 
-	const onSumitButtonClicked = () => {
-		if (!(text === '') || !(fileName === '')) {
-			setText('');
-			setFileName('');
+	const handleCommentClick = (postId) => {
+		// Close the comments if they are already open
+		if (commentFocus === postId) {
+			setCommentFocus(-1);
+			return;
+		}
 
-			if (fileInputRef.current) {
-				fileInputRef.current.value = ''; // Reset the file input value
+		//Ensure that the comments are fetched only once
+		if (comments.length > 0 && comments[0].postId === postId) {
+			setCommentFocus(postId);
+			return;
+		}
+
+		// Fetch comments for the post
+		const fetchComments = async (postId) => {
+			const response = await getPostComments(postId);
+			if (!response) {
+				console.error('Failed to fetch comments');
+				alert('Something went wrong while fetching the comments.');
+				return;
 			}
 
-			createPost({text: text, file: fileName});
+			const formattedComments = response.map(comment => {
+				const { id, text, postId, User } = comment;
+
+				let { firstName, lastName, photo } = User || {};
+				if (photo === null) {
+					photo = 'https://via.placeholder.com/100';
+				}
+
+				return {
+					id,
+					text,
+					postId,
+					firstName,
+					lastName,
+					photo: photo
+				};
+			});
+		
+			setComments(formattedComments);
 		}
+
+		fetchComments(postId);
+
+		setCommentFocus(postId);
+	}
+
+	const handleLike = (postId) => {
+		const addLike = async (postId) => {
+			const result = await likePost(postId);
+
+			if (!result) {
+				console.error('Failed to like post');
+				alert('Something went wrong while liking the post.');
+			}
+		}
+
+		addLike(postId);
 	};
 
-	useEffect(() => {
-		if (loading) {
-			// Handle loading state (e.g., show a loader)
-		}
-	}, [loading]);
+	const onSumitButtonClicked = () => {
+		const submit = async () => {
+			if (!(text === '') || !(fileName === '')) {
+				const response = await createPost({text: text, file: fileInputRef.current.files[0]});
+				
+				if (!response) {
+					console.error('Failed to create post');
+					alert('Something went wrong while creating the post.');
+					return;
+				}
 
+				if (fileInputRef.current) {
+					fileInputRef.current.value = ''; // Reset the file input value
+				}
+				setText('');
+				setFileName('');
+				refreshPosts();
+			}
+		}
+
+		submit();
+	};
+
+	const handleCommentChange = (event) => {
+		setCommentText(event.target.value); // Update the value state
+	};
+
+	const handleCommentSubmit = (postId) => {
+		const submit = async (postId) => {
+			if (commentText === '') {
+				return;
+			}
+			const response = await commentPost(postId, commentText);
+			if (!response) {
+				console.error('Failed to create comment');
+				alert('Something went wrong while creating the comment.');
+				return;
+			}
+
+			setComments(prevComments => [
+                ...prevComments,
+                {
+                    id: response.id,
+                    postId: postId,
+                    text: commentText,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    photo: user.photo ? user.photo : 'https://via.placeholder.com/100'
+                }
+            ]);
+
+			setCommentText('');
+		}
+
+		submit(postId);
+	};
+
+	if (loading || authLoading) {
+		return <Spinner />;  // Show spinner while loading
+	}
 
 	return (
 		<div className="homepage-container">
@@ -102,7 +249,7 @@ function HomePage() {
 				</aside>
 
 				<main className="main-content">
-					<h3>Το Χρονολόγιο σας</h3>
+					<h2>Το Χρονολόγιο σας</h2>
 					<div className="box-container post-container">
 						<AutoResizingTextArea
 							value={text}
@@ -134,25 +281,71 @@ function HomePage() {
 						</div>
 					</div>
 
-					<div className="box-container post-container">
-						<div className="post-user-container"> 
-							<img
-								src={user.photo}
-								alt="Profile"
-								className="mini-profile-picture"
-							/>
-							<h3>{user.firstName + ' ' + user.lastName}</h3>
+					{posts.map((post, index) => (
+						<div key={index} className="box-container post-container">
+							<div className="post-user-container">
+								<img src={post.photo} alt="Profile" className="mini-profile-picture" />
+								<h3>{post.firstName + ' ' + post.lastName}</h3>
+							</div>
+							<div className="post-body">
+								<p>{post.text}</p>
+								{post.fileType === 'image' && <img src={post.file} alt="Post media" style={{
+									maxWidth: '100%',
+									height: 'auto',
+									marginTop: '10px'
+								}}/>}
+								{post.fileType === 'video' && (
+									<video controls style={{
+											maxWidth: '100%',
+											height: 'auto',
+											marginTop: '10px'
+										}}>
+										<source src={post.file} type={post.file.type}/>
+										Your browser does not support the video tag.
+									</video>
+								)}
+								{post.fileType === 'audio' && (
+								<audio controls style={{
+										width: '100%',
+										maxWidth: '100%',
+										marginTop: '10px'
+									}}>
+									<source src={post.file} type={post.file.type} />
+									Your browser does not support the audio element.
+								</audio>
+								)}
+							</div>
+							<div className="post-actions">
+								<button className="custom-button" onClick={() => handleLike(post.id)}>Ενδιαφέρον</button>
+								<button className="custom-button" 
+									onClick={() => handleCommentClick(post.id)}>Σχόλια</button>
+							</div>
+							{ commentFocus === post.id ? 
+								<div className='comments-container'>
+									
+									<div className='old-comments-container' ref={commentsContainerRef}>
+										{comments
+										.filter(comment => comment.postId === post.id)
+										.map((comment, index) => (
+											<div key={index} className='comment'>
+												
+												<div className="comment-user-container">
+													<img src={comment.photo} alt="Profile" className="micro-profile-picture" />
+													{comment.firstName + ' ' + comment.lastName}
+												</div>
+												{comment.text}
+											</div>
+										))}
+									</div>
+									<div className='new-comment-container'>
+										<textarea value={commentText} placeholder='Γράψτε ένα νέο σχόλιο ...' onChange={handleCommentChange}/>
+										<button onClick={() => handleCommentSubmit(post.id)}>Ανάρτηση</button>
+									</div>
+								</div> 
+								: null
+							}
 						</div>
-						<div className="post-body">
-							<p>
-								Καλημέρα σε όλους! Σήμερα είναι μια όμορφη μέρα.
-							</p>
-						</div>
-						<div className="post-actions">
-							<button className="custom-button">Ενδιαφέρον</button>
-							<button className="custom-button">Σχόλιο</button>
-						</div>
-					</div>
+					))}
 				</main>
 			</div>
 		</div>

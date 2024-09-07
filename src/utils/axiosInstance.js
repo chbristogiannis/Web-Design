@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     (error) => {
-        if (error.response && error.response.status === 401) {
+        if (error.response && error.response.status === 401 || error.response.status === 403) {
             // Token is expired or invalid, logout the user
             localStorage.removeItem('token');
             const currentUrl = window.location.pathname;

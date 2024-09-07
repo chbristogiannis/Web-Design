@@ -33,9 +33,20 @@
     background-color: var(--blue-color) !important;
     border-radius: 1.5rem !important;
     border: none !important;
-    transition: 0.5s !important;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    cursor: pointer;
 
     &:hover {
         background-color: var(--button-bg-color-hover) !important;
+    }
+
+    .active {
+        transform: scale(0.98);
+    }
+
+    &:focus {
+        outline: 1px solid var(--light-blue-color);
+        /* border: ; */
+        transform: scale(0.98);
     }
 }

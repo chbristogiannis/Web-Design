@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
 
 	const validateUser = (userData) => {
-        return userData && userData.firstName && userData.lastName && userData.hasPhoto;
+        return userData && userData.firstName && userData.lastName;
     };
 
 	// Check if the user is authenticated on initial render
@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }) => {
 
 	// Function to log in the user
 	const login = async (email, password) => {
+		console.log('Logging in');
 		try {
 			const response = await loginService(email, password);  // Call login service
 			const token = response.token;
@@ -72,6 +73,7 @@ export const AuthProvider = ({ children }) => {
 
 	// Function to log out the user
 	const logout = () => {
+		console.log('Logging out');
 		logoutService();  // Call logout service to clear token amn user
 		setIsAuthenticated(false);
 		setUser(null);

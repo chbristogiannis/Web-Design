@@ -1,14 +1,14 @@
-/* src/UserHomePage.css*/
+
 .homepage-container {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
 	width: 100vw;
 	background-color: var(--background-color);
 
 	.content-container {
 		display: flex;
 		justify-content: center;
+		margin-top: 2rem;
 		padding: 2rem 5rem 1rem 5rem;
 	}
 
@@ -17,6 +17,7 @@
 		margin-top: 1rem;
 		padding: 3rem;
 		text-align: center;
+		width: 10vw;
 		height: fit-content;
 
 		h3 {
@@ -29,6 +30,19 @@
 
 	.main-content {
 		padding: 1rem;
+		margin-right: 10vw;
+		
+		h2 {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-style: italic;
+			font-size: 1.5rem;
+			margin-bottom: 1rem;
+			color: var(--primary-text-color);
+			flex: 1;
+			align-self: center;
+		}
 
 		.filename-container {
 			display: flex;
@@ -69,6 +83,9 @@
 		display: flex;
 		gap: 1rem;
 		align-items: center;
+		color: var(--primary-text-color);
+
+		border-bottom: 1px solid var(--container-border-color);
 	}
 
 	.post-actions {
@@ -78,6 +95,90 @@
 	}
 
 	.post-body {
-		border-bottom: 1px solid #999999;
+		p {
+			word-wrap: break-word;
+		}
 	}
+}
+
+.comments-container {
+	display: flex;
+	margin-top: .5rem;
+	width: 100%;
+	flex-direction: column;
+	gap: .5rem;
+
+	.comment {
+		display: flex;
+		flex-direction: column;
+		gap: .5rem;
+		flex: 1;
+		padding: .5rem 1rem;
+		font-size: 1rem;
+		background-color: white;
+		border: 1px solid var(--container-border-color);
+		border-radius: 1rem;
+
+		.comment-user-container {
+			display: flex;
+			gap: .5rem;
+			align-items: center;
+			font-weight: bold;
+			color: var(--primary-text-color);
+		}
+	}
+
+	.old-comments-container {
+		display: flex;
+		flex-direction: column;
+		overflow-y: scroll;
+		max-height: 11rem;
+		gap: .5rem;
+		scroll-behavior: smooth;
+	}
+
+	.new-comment-container {
+		display: flex;
+		margin-top: .5rem;
+
+		textarea {
+			flex: 1;
+			height: 1rem;
+			resize: none;
+			padding: 0.5rem 1rem;
+			border-radius: 1rem 0 0 1rem;
+			border: 1px solid var(--container-border-color);
+	
+			&:focus {
+				outline: none;
+			}
+		}
+		
+		button {
+			background-color: var(--blue-color);
+			color: white;
+			border: none;
+			font-size: small;
+			padding: 0.5rem 1rem;
+			transition: background-color 0.3s ease, transform 0.1s ease;
+			cursor: pointer;
+			border-radius: 0 1rem 1rem 0;
+	
+			.active {
+				transform: scale(0.98);
+			}
+	
+			&:hover {
+				background-color: var(--button-bg-color-hover);
+			}
+	
+			&:focus {
+				outline: 1px solid var(--light-blue-color);
+				/* border: ; */
+				transform: scale(0.98);
+			}
+		}
+	}
+
+	
 }
