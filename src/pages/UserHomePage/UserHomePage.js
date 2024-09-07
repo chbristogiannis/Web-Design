@@ -37,11 +37,11 @@ function HomePage() {
 				setLoading(true);  // Start loading
 				const response = await getPosts();
 				const mappedResponse = response.map(post => {
-					let { id, text, file, firstName, lastName, photo } = post;
+					let { id, text, file, fileType, firstName, lastName, photo } = post;
 					if (photo === null) {
 						photo = 'https://via.placeholder.com/100';
 					}
-					return { id, text, file, firstName, lastName, photo };
+					return { id, text, file, fileType, firstName, lastName, photo };
 				});
 				await setPosts(mappedResponse);  // Update state with posts
 				setLoading(false);  // Stop loading
@@ -67,21 +67,6 @@ function HomePage() {
 		if (fileInputRef.current) {
 			fileInputRef.current.value = ''; // Reset the file input value
 		}
-	};
-
-	const refreshPosts = async () => {
-		setLoading(true);  // Start loading
-		const response = await getPosts();
-		const mappedResponse = response.map(post => {
-			let { id, text, file, firstName, lastName, photo } = post;
-			if (photo === null) {
-				photo = 'https://via.placeholder.com/100';
-			}
-			return { id, text, file, firstName, lastName, photo };
-		});
-		setPosts(mappedResponse);  // Update state with posts
-		setLoading(false);  // Start loading
-
 	};
 
 	const mediaButtonClicked = () => {
@@ -167,12 +152,27 @@ function HomePage() {
 					return;
 				}
 
+				console.log(response);
+
+				setPosts(prevPosts => [
+					{
+						id: response.id,
+						text: text,
+						file: response.file,
+						fileType: response.fileType,
+						firstName: user.firstName,
+						lastName: user.lastName,
+						photo: user.photo ? user.photo : 'https://via.placeholder.com/100'
+					},
+					...prevPosts
+				]);
+
 				if (fileInputRef.current) {
 					fileInputRef.current.value = ''; // Reset the file input value
 				}
 				setText('');
 				setFileName('');
-				refreshPosts();
+				// refreshPosts();
 			}
 		}
 

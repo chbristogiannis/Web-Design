@@ -20,7 +20,6 @@ const createPost = async (content) => {
             formDataObj.append('file', content.file);
         }
 
-        console.log(content.file);
         const response = await axiosInstance.post('post/createPost', formDataObj, {
             headers: {
                 'Content-Type': 'multipart/form-data',
