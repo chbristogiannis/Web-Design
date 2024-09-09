@@ -1,12 +1,12 @@
 // src/UserHomePage.js
 import React, { useState, useRef, useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext';  // Adjust the import path
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-import AutoResizingTextArea from '../../components/AutoResizingTextArea';  // Adjust the import path
-import Navbar from '../../components/NavBar';  // Adjust the import path
+import AutoResizingTextArea from '../../components/AutoResizingTextArea/AutoResizingTextArea';  // Adjust the import path
+import Navbar from '../../components/NavBar/NavBar';  // Adjust the import path
 import DeleteButton from '../../components/Delete-Button';
-import Spinner from '../../components/Spinner'; // Import the Spinner component
+import Spinner from '../../components/Spinner/Spinner'; // Import the Spinner component
 
 import { createPost , getPosts, likePost, commentPost, getPostComments } from '../../services/postServices';
 
@@ -213,7 +213,7 @@ function HomePage() {
 		submit(postId);
 	};
 
-	if (loading || authLoading) {
+	if (authLoading) {
 		return <Spinner />;  // Show spinner while loading
 	}
 
@@ -280,8 +280,7 @@ function HomePage() {
 							<button className="custom-button" onClick={onSumitButtonClicked} > Δημιοσίευση </button>
 						</div>
 					</div>
-
-					{posts.map((post, index) => (
+					{loading ? <Spinner/> : posts.map((post, index) => (
 						<div key={index} className="box-container post-container">
 							<div className="post-user-container">
 								<img src={post.photo} alt="Profile" className="mini-profile-picture" />

@@ -1,0 +1,33 @@
+.top-navbar {
+    background-color: var(--blue-color);
+    padding: 1rem;
+    position: fixed;
+    text-decoration: none;
+    z-index: 1000;
+    width: 100%;
+
+    ul {
+        list-style-type: none;
+        display: flex;
+        justify-content: space-around;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: inline;
+
+            a {
+                font-size: 1.125rem;
+                font-weight: 500 !important;
+                color: var(--background-color);
+                text-decoration: none;
+            }
+
+            a.active-link {
+                font-size: 1.125rem;
+                text-decoration: underline;
+                color: var(--background-color);
+            }
+        }
+    }
+}

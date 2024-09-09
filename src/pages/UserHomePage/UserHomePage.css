@@ -4,6 +4,7 @@
 	flex-direction: column;
 	width: 100vw;
 	background-color: var(--background-color);
+	align-items: center;
 
 	.content-container {
 		display: flex;

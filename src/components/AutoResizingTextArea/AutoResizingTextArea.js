@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import '../styles/AutoResizingTextArea.css';
+import './AutoResizingTextArea.css';
 
 const AutoResizingTextArea = ({ value, onChange, placeholder, ...props }) => {
     const textAreaRef = useRef(null);

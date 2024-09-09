@@ -1,71 +1,142 @@
 /* src/PersonalDetailsPage.css */
 .personal-details-page {
-  min-height: 110vh;
-  background-color: #f4f4f4;
+	display: flex;
+	flex-direction: column;
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--background-color);
+	align-items: center;
 }
 
-.personal-details-box h2 {
-  margin-bottom: 10px;
-  font-size: 1.2rem;
+.personal-details {
+	display: flex;
+	flex-direction: column;
+	margin-top: 5rem;
+	width: 100%;
+	padding: 0 5rem 0 5rem;
+	align-items: center;
 }
 
 .personal-details-box {
-  margin: 0 20%;
-  min-width: 200px;
+	display: flex;
+	width: 70vw;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	flex-wrap: wrap;
+	gap: .5rem,
 }
 
-.personal-details-container {
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.bubble-container {
+	align-items: center;
+	background-color: #d0d0d0;
+	border: 1px solid var(--light-blue-color);
+	border-radius: 5rem;
+	box-shadow: .125rem .125rem 0.25rem rgba(0, 0, 0, 0.1);
+	color: var(--primary-text-color);
+	display: flex;
+	font-size: .875rem;
+	font-weight: 600;
+	gap: .5rem;
+	padding: .25rem 1rem;
+	height: 3rem;
+	width: fit-content;
+	cursor: pointer;
+}
+.bubble-button {
+	background-color: var(--blue-color);
+	border: 2px solid var(--light-blue-color);
+	color: white;
+	cursor: pointer;
+	margin-left: 1rem;
+	border-radius: 5rem;
+	font-size: 2rem;
+	width: 3.25rem;
+	height: 3.25rem;
+
 }
 
-.personal-details-container .form-group {
-  margin: 16px auto 20px auto;
-  padding: 8px;
+.create-new-item {
+	flex-direction: column;
+	display: flex;
+	align-items: center;
+	flex: 1;
+
 }
 
-.personal-details-container .form-group label {
-  display: block;
-  font-weight: bold;
+.personal-info-form {
+	display: flex;
+	flex-direction: column;
+	/* justify-content: center;
+	align-items: center; */
+	width: 100%;
+	flex: 1;
+	gap: 1rem;
+	margin-bottom: 1rem;
+
+	.input-container {
+		display: flex;
+		align-items: baseline;
+	}
+
+	span {
+		font-size: 1.125rem;
+		color: var(--secondary-text-color);
+		margin-bottom: 1rem;
+		display: inline-block;
+		width: 13rem;
+		justify-self: center;
+	}
+
+	input {
+		flex: 1;
+		height: 1.5rem;
+		font-size: large;
+		resize: none;
+		padding: 0.75rem 1.5rem;
+		border-radius: 2rem;
+		border: 1px solid var(--container-border-color);
+	
+		&:focus {
+		outline: none;
+		}
+	}
+
+	input[type="text"] {
+		flex: 1;
+	}
+
+	input[type="number"] {
+		flex: 1;
+		max-width: 5rem;
+	}
 }
 
-.personal-details-container .form-group textarea {
-  width: 100%;
-  height: 100px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.show-items {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem;
 }
 
-.privacy-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.personal-details-delete-button {
+	align-self: flex-end;
+	margin-bottom: 1rem;
 }
 
-.privacy-container label {
-  margin: 2px;
-  display: flex;
-  align-items: center;
+.form-header {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
-.privacy-container select {
-  margin-left: 10px;
+.form-header-title {
+	font-size: 1.25rem;
+	font-weight: bold;
+	color: var(--primary-text-color);
 }
 
-.personal-details-container button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  background-color: #0073b1;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.personal-details-container button:hover {
-  background-color: #005582;
+.custom-checkbox {
+	height: inherit !important;
+	flex: 0 !important;
+	width: auto !important;
 }

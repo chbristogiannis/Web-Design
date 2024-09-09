@@ -1,91 +1,150 @@
 /* src/NetworkPage.css*/
 .network-page {
-  height: 100vh;
-  background-color: #f4f4f4;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100vw;
 }
 
-.network-page .search-bar {
-  padding: 8px 10% 0 10%;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
+.search-container {
+	padding: 1rem 0;
+	width: 60vw;
+
+	color: var(--primary-text-color);
+	font-size: large;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: .5rem;
+
+	.top-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		flex: 1;
+		/* background-color: red; */
+
+		.title {
+			color: var(--primary-text-color);
+			margin-left: 2rem;
+			font-size: large;
+			font-weight: bold;
+		}
+
+		.close {
+			margin-right: 2rem;
+			cursor: pointer;
+			color: var(--primary-text-color);
+			font-size: medium;
+			text-decoration: underline;
+			color: var(--blue-color);
+		}
+	}
+
+	li {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+		width: 90%;
+		cursor: pointer;
+		padding: .5rem 1rem;
+		list-style: none;
+		border-radius: 2rem;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+		border: var(--container-border);
+		color: var(--primary-text-color);
+		font-weight: 500;
+		
+	}
 }
 
-.network-page .search-bar input {
-  width: 90%;
-  padding: 8px;
-  border-radius: 8px 0 0 8px;
-  border-width: 0.5px;
+.search-bar {
+	display: flex;
+	/* width: 100%; */
+	flex: 1;
+	width: 60vw;
+	margin-top: 5rem;
+	margin-bottom: 1rem;
+
+	input {
+		flex: 1;
+		height: 1.5rem;
+		font-size: large;
+		resize: none;
+		padding: 0.75rem 1.5rem;
+		border-radius: 2rem 0 0 2rem;
+		border: 1px solid var(--container-border-color);
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	button {
+		background-color: var(--blue-color);
+		color: white;
+		border: none;
+		font-size: large;
+		padding: 0.5rem 1rem 0.5rem 1rem;
+		transition: background-color 0.3s ease, transform 0.1s ease;
+		cursor: pointer;
+		border-radius: 0 2rem 2rem 0;
+
+		.active {
+			transform: scale(0.98);
+		}
+
+		&:hover {
+			background-color: var(--button-bg-color-hover);
+		}
+
+		&:focus {
+			outline: 1px solid var(--light-blue-color);
+			transform: scale(0.98);
+		}
+	}
 }
 
-.network-page .search-bar button {
-  padding: 8px 12px;
-  width: 10%;
-  cursor: pointer;
-  background-color: #0073b1;
-  color: white;
-  border: none;
-  border-radius: 0 8px 8px 0;
+
+.connected-professionals {
+	width: 60%;
+	color: var(--primary-text-color);
+
+	h3 {
+		text-align: center;
+	}
+
+
+	.professionals-grid {
+		display: grid;
+		justify-content: center;
+		grid-template-columns: repeat(auto-fit, 200px);
+		gap: 2rem;
+	}
+
+
+	.professional-card {
+		cursor: pointer;
+		text-align: center;
+		border-radius: 2rem;
+		padding: 0.75rem;
+		/* height: 12rem; */
+
+
+		img {
+			max-width: 100%;
+			height: auto;
+			border-radius: 50%;
+		}
+
+		h4 {
+			margin: 10px 0;
+		}
+	}
 }
 
-.network-page .search-bar button:hover {
-  background-color: #005582;
-}
 
-.network-page .search-results ul {
-  list-style: none;
-  padding: 0;
-  margin: 40px auto;
-  margin: 0 10%;
-  min-width: 300px;
-}
 
-.network-page .search-results h3 {
-  margin: 0 10%;
-  padding-bottom: 10px;
-}
-
-.network-page .search-results li {
-  cursor: pointer;
-  padding: 10px;
-  /* // background-color: #f0f0f0;  */
-  background-color: white;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ccc;
-}
-
-.network-page .connected-professionals {
-  margin: 40px auto;
-  margin: 0 10%;
-  min-width: 300px;
-}
-
-.network-page .professionals-grid {
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-.network-page .professional-card {
-  cursor: pointer;
-  border: 1px solid #ccc;
-  padding: 15px;
-  text-align: center;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.network-page .professional-card img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 50%;
-}
-
-.network-page .professional-card h4 {
-  margin: 10px 0;
-}
