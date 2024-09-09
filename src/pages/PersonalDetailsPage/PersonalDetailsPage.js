@@ -12,11 +12,11 @@ const PersonalDetailsPage = () => {
         <div className="personal-details-page">
             <Navbar />
             <div className="personal-details">
-                <h2>H επαγγελματική μου εμπειρία:</h2>
+                <h3>H επαγγελματική μου εμπειρία:</h3>
                 <Experience />
-                <h2>Η εκπαίδευση μου:</h2>
+                <h3>Η εκπαίδευση μου:</h3>
                 <Education />
-                <h2>Οι Δεξιότητες μου:</h2>
+                <h3>Οι Δεξιότητες μου:</h3>
                 <Skill/>
             </div>
         </div>
