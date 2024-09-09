@@ -157,64 +157,64 @@ const UserDetailPage = () => {
 					<div className='profile'>
 						<div className='box-container'>
 							<img src={user.photo} alt='profile' className='profile-image'/>
-							<div className='user-name'>{user.firstName} {user.lastName}</div>
+							<div className='profile-name'>{user.firstName} {user.lastName}</div>
 						</div>
 						{(!isFriend && !friendRequestSent && !friendRequestReceived)&& 
-							<button onClick={handleFriendRequest}> add as friend </button>}
-						{(!isFriend && friendRequestReceived) && 
-							<button onClick={handleFriendRequestAccept}> accept friend request</button>}
-						{(!isFriend && friendRequestReceived) && 
-							<button onClick={handleFriendRequestDecline}> decline friend request</button>}
+							<button onClick={handleFriendRequest} className='custom-button'> Αίτημα φιλίας</button>}
+						<div>
+							{(!isFriend && friendRequestReceived) && "Έχετε λάβει αίτημα φιλίας"}
+						</div>
+						<div style={{
+							display: 'flex',
+							gap: '.5rem',
+						}}>
+							{(!isFriend && friendRequestReceived) && 
+								<button onClick={handleFriendRequestAccept} className='green-button'> Αποδοχή</button>}
+							{(!isFriend && friendRequestReceived) && 
+								<button onClick={handleFriendRequestDecline} className='delete-button'> Απόρρυψη</button>}
+						</div>
 						{(!isFriend && friendRequestSent)  && 
-							<button disabled> friend request already sent</button>}
+							<button disabled className='custom-button'> Έχει γίνει αίτημα </button>}
 						{isFriend && 
-							<button onClick={handleRemoveFriend}> remove friend</button>}
+							<button onClick={handleRemoveFriend} className='delete-button'> Διαγραφή Επαγγελματία</button>}
 					</div>
 					<div className="personal-info-container">
-						{/* <div className='skills'> */}
-							<div className='box-container'>
-								<div className='title'>Δεξιότητες</div>
+						<h3 className='title'>Δεξιότητες</h3>
+						<div className="box-container personal-details-box">
+							{ skills.length === 0 && <p>Δεν υπάρχουν καταχωρημένα στοιχεία</p>}
+							<div className='show-items'>
 								{skills.map((skill, index) => (
-									<div key={index} className='skill'>{skill.skill}</div>
+									<p key={index} className='bubble-container'>{skill.skill}</p>
 								))}
 							</div>
-						{/* </div> */}
-						{/* <div className='education'> */}
-							<div className='box-container'>
-								<div className='title'>Εκπαίδευση</div>
+						</div>
+						<h3>Εκπαίδευση</h3>
+						<div className="box-container personal-details-box">
+							{ education.length === 0 && <p>Δεν υπάρχουν καταχωρημένα στοιχεία</p>}
+							<div className='show-items'>
 								{education.map((ed, index) => (
-									<div key={index} className='education-item'>
-										<div className='institution'>{ed.institution}</div>
-										<div className='degree'>{ed.degree}</div>
-										<div className='years'>{ed.startYear} - {ed.endYear}</div>
+									<div key={ed.id} className='bubble-container'>
+										<p>{ed.institution}</p>
+										<p>{ed.degree}</p>
+										<p>{ed.startYear}-{ed.endYear ? ed.endYear : 'Σήμερα'}</p>
 									</div>
 								))}
 							</div>
-							{/* <div className="box-container personal-details-box">
-								<h3>Εκπαίδευση</h3>
-								<div className='show-items'>
-									{education.map((ed, index) => (
-										<div key={ed.id} className='bubble-container'>
-											<p>{ed.institution}</p>
-											<p>{ed.degree}</p>
-											<p>{ed.startYear}-{ed.endYear ? ed.endYear : 'Σήμερα'}</p>
-										</div>
-									))}
-								</div>
-							</div> */}
+							</div>
 						{/* </div> */}
-						{/* <div className='experience'> */}
-							<div className='box-container'>
-								<div className='title'>Εμπειρία</div>
+						<h3 className='title'>Εμπειρία</h3>
+						<div className='box-container personal-details-box'>
+							{ experience.length === 0 && <p>Δεν υπάρχουν καταχωρημένα στοιχεία</p>}
+							<div className='show-items'>
 								{experience.map((exp, index) => (
-									<div key={index} className='experience-item'>
-										<div className='company'>{exp.company}</div>
-										<div className='role'>{exp.role}</div>
-										<div className='years'>{exp.startYear} - {exp.endYear}</div>
+									<div key={index} className='bubble-container'>
+										<p className='company'>{exp.company}</p>
+										<p className='role'>{exp.role}</p>
+										<p className='years'>{exp.startYear} - {exp.endYear}</p>
 									</div>
 								))}
 							</div>
-						{/* </div> */}
+						</div>
 					</div>
 				</div>
 			)}

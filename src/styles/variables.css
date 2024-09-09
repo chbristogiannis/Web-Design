@@ -12,4 +12,6 @@
     --button-bg-color-hover: #0f4681;
 
     --error-color: #ff0033;
+
+    --button-bg-color-disabled: #ccc;
 }
