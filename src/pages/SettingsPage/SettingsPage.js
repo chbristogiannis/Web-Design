@@ -1,33 +1,21 @@
 // src/SettingsPage.js
-import React, { useState } from 'react';
+import React, { useContext} from 'react';
 
 import Navbar from '../../components/NavBar/NavBar';  // Adjust the import path
 import ChangeEmail from '../../components/UpdateEmail';
-import changePassword from '../../components/UpdatePassword';
-import './SettingsPage.css';
 import ChangePassword from '../../components/UpdatePassword';
+import AuthContext from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
+import './SettingsPage.css';
 
 function SettingsPage() {
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmNewPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [passwordSuccess, setPasswordSuccess] = useState('');
 
-  // Handle Password Update
-  const handlePasswordSubmit = (e) => {
-    e.preventDefault();
-    setPasswordError('');
-    setPasswordSuccess('');
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();  // Use the useNavigate hook to navigate to different pages
 
-    if (newPassword !== confirmNewPassword) {
-      setPasswordError('New passwords do not match.');
-      return;
-    }
-
-    // Implement password update logic here
-    // For now, we simulate success
-    setPasswordSuccess('Password updated successfully.');
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');  // Use the navigate function to redirect to the login
   };
 
   return (
@@ -41,6 +29,9 @@ function SettingsPage() {
         <h3>Change Password</h3>
         <ChangePassword />
       </div>
+      <button onClick={handleLogout} className='delete-button' style={{
+        marginTop: '1rem'
+      }}>Αποσύνδεση</button>
     </div>
   );
 }

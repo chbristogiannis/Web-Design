@@ -18,6 +18,7 @@ function NetworkPage() {
 	const [noConnectedProfessionals, setNoConnectedProfessionals] = useState(false);
 	const [noSearchResults, setNoSearchResults] = useState(false);
 
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchConnectedProfessionals = async() => {
@@ -63,7 +64,9 @@ function NetworkPage() {
 	};
 
 	const handleProfessionalClick = (id) => {
-		console.log('clicked', id);
+		// console.log('clicked', id);
+		const navigateLink = `/UserDetailPage/${id}`;
+		navigate(navigateLink);
 		// window.location.href = `/professional/${id}`;
 	};
 

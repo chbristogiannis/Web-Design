@@ -82,7 +82,7 @@ const ChangePassword = () => {
                     onChange={(e) => setConfirmNewPassword(e.target.value)}
                 />
             </div>
-            <button onClick={handleSubmit}>Αλλαγή κωδικού</button>
+            <button onClick={handleSubmit} className='custom-button'>Αλλαγή κωδικού</button>
         </div>
     )
 };
