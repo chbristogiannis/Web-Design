@@ -88,9 +88,9 @@ function NetworkPage() {
 					{searchResults.map((professional) => (
 						<li key={professional.id} onClick={() => handleProfessionalClick(professional.id)}>
 							{professional.photo ? (
-								<img src={professional.photo} alt="profile" className='micro-profile-picture' />
+								<img src={professional.photo} alt="profile" className="micro-profile-picture" />
 							) : (
-								<img src={'https://via.placeholder.com/100'} alt="profile" className='micro-profile-picture' />
+								<img src={'https://via.placeholder.com/100'} alt="profile" className="micro-profile-picture" />
 							)}
 							<span className="professional-name">
 								{professional.firstName} {professional.lastName} {professional.role} {professional.company}
