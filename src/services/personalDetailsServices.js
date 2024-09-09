@@ -32,7 +32,6 @@ const updateExperienceService = async (experience) => {
 
 const deleteExperienceService = async (id) => {
     try {
-        console.log(id);
         const response = await axiosInstance.delete('/userInfo/experience', {
             data: { id }
         });
@@ -43,4 +42,101 @@ const deleteExperienceService = async (id) => {
     }
 }
 
-export { addExperienceService, getExperienceService , updateExperienceService, deleteExperienceService };
+const addEducationService = async (education) => {
+    try {
+        const response = await axiosInstance.post('/userInfo/education', education);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+const getEducationService = async () => {
+    try {
+        const response = await axiosInstance.get('/userInfo/education');
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+const updateEducationService = async (education) => {
+    try {
+        const response = await axiosInstance.put('/userInfo/education', education);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+const deleteEducationService = async (id) => {
+    try {
+        const response = await axiosInstance.delete('/userInfo/education', {
+            data: { id }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+const addSkillService = async (skill) => {
+    try {
+        const response = await axiosInstance.post('/userInfo/skills', skill);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+const getSkillService = async () => {
+    try {
+        const response = await axiosInstance.get('/userInfo/skills');
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+const updateSkillService = async (id) => {
+    try {
+        const response = await axiosInstance.put('/userInfo/skills', id);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+const deleteSkillService = async (id) => {
+    try {
+        const response = await axiosInstance.delete('/userInfo/skills', {
+            data: { id }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export { 
+    addExperienceService, 
+    getExperienceService , 
+    updateExperienceService, 
+    deleteExperienceService,
+    addEducationService,
+    getEducationService,
+    updateEducationService,
+    deleteEducationService,
+    addSkillService,
+    getSkillService,
+    updateSkillService,
+    deleteSkillService
+};

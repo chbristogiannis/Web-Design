@@ -1,17 +1,16 @@
-// src/components/Experience.js
 import React, { useState, useEffect } from 'react';
-import { 
-    addExperienceService, 
-    getExperienceService, 
-    updateExperienceService,
-    deleteExperienceService
-} from '../../services/personalDetailsServices'; // Adjust path as needed
+import {
+    addEducationService,
+    getEducationService,
+    updateEducationService,
+    deleteEducationService 
+} from '../../services/personalDetailsServices';
 
-const Experience = () => {
-    const [experiences, setExperiences] = useState([]);
+const Education = () => {
+    const [educations, setEducations] = useState([]);
     const [form, setForm] = useState({
-        company: '',
-        role: '',
+        institution: '',
+        degree: '',
         startYear: '',
         endYear: '',
         isPrivate: false
@@ -22,25 +21,25 @@ const Experience = () => {
     const [formTitle, setFormTitle] = useState('Φόρμα Δημιουργίας');
 
     useEffect(() => {
-        const fetchExperiences = async () => {
+        const fetchEducations = async () => {
             try {
-                const data = await getExperienceService();
+                const data = await getEducationService();
                 if (data) {
-                    setExperiences(data.map(exp => ({
-                        id: exp.id,
-                        company: exp.company,
-                        role: exp.role,
-                        startYear: exp.startYear,
-                        endYear: exp.endYear || '',
-                        isPrivate: exp.isPrivate
+                    setEducations(data.map(edu => ({
+                        id: edu.id,
+                        institution: edu.institution,
+                        degree: edu.degree,
+                        startYear: edu.startYear,
+                        endYear: edu.endYear || '',
+                        isPrivate: edu.isPrivate
                     })));
                 }
             } catch (error) {
-                console.error("Error fetching experiences:", error);
+                console.error("Error fetching educations:", error);
             }
         };
 
-        fetchExperiences();
+        fetchEducations();
     }, []);
 
     const handleInputChange = (e) => {
@@ -53,8 +52,8 @@ const Experience = () => {
 
     const resetForm = () => {
         setForm({
-            company: '',
-            role: '',
+            institution: '',
+            degree: '',
             startYear: '',
             endYear: '',
             isPrivate: false
@@ -66,52 +65,53 @@ const Experience = () => {
     };
 
     const handleSubmit = async () => {
-        const { company, role, startYear, endYear, isPrivate } = form;
-        if (!company || !role || !startYear) {
+        const { institution, degree, startYear, endYear, isPrivate } = form;
+        if (!institution || !degree || !startYear) {
             setFormAlert(true);
             return;
         }
+
         try {
             const data = updateId ? 
-                await updateExperienceService({ id: updateId, company, role, startYear, endYear: endYear || null, isPrivate }) :
-                await addExperienceService({ company, role, startYear, endYear: endYear || null, isPrivate });
+                await updateEducationService({id: updateId, institution, degree, startYear, endYear, isPrivate}) :
+                await addEducationService({institution, degree, startYear, endYear: endYear || null , isPrivate});
 
             if (data) {
-                setExperiences(prevExperiences => {
+                setEducations(prevEducations => {
                     if (updateId) {
-                        return prevExperiences.map(exp => exp.id === updateId ? data : exp);
+                        return prevEducations.map(edu => edu.id === updateId ? data : edu);
                     } else {
-                        return [...prevExperiences, data];
+                        return [...prevEducations, data];
                     }
                 });
                 resetForm();
             }
         } catch (error) {
-            console.error("Error submitting experience:", error);
+            console.error("Error submitting education form:", error);
         }
     };
 
     const handleDelete = async () => {
         try {
-            const data = await deleteExperienceService( updateId );
+            const data = await deleteEducationService(updateId);
             if (data) {
-                setExperiences(prevExperiences => prevExperiences.filter(exp => exp.id !== updateId));
+                setEducations(prevEducations => prevEducations.filter(edu => edu.id !== updateId));
                 resetForm();
             }
         } catch (error) {
-            console.error("Error deleting experience:", error);
+            console.error("Error deleting education:", error);
         }
     };
 
     const handleEdit = (id) => {
-        const experience = experiences.find(exp => exp.id === id);
-        if (experience) {
+        const education = educations.find(edu => edu.id === id);
+        if (education) {
             setForm({
-                company: experience.company,
-                role: experience.role,
-                startYear: experience.startYear,
-                endYear: experience.endYear || '',
-                isPrivate: experience.isPrivate
+                institution: education.institution,
+                degree: education.degree,
+                startYear: education.startYear,
+                endYear: education.endYear,
+                isPrivate: education.isPrivate
             });
             setUpdateId(id);
             setFormTitle('Φόρμα Επεξεργασίας');
@@ -130,7 +130,7 @@ const Experience = () => {
                         <button type="submit" className='delete-button personal-details-delete-button' onClick={resetForm}>x</button>
                     </div>
                     <div className='personal-info-form'>
-                        {['company', 'role', 'startYear'].map(field => (
+                        {['institution', 'degree', 'startYear'].map(field => (
                             <div className='input-container' key={field}>
                                 <span>{field.charAt(0).toUpperCase() + field.slice(1)}*</span>
                                 <input
@@ -185,11 +185,11 @@ const Experience = () => {
             )}
             {!showForm && (
                 <div className='show-items'>
-                    {experiences.map(exp => (
-                        <div key={exp.id} className='bubble-container' onClick={() => handleEdit(exp.id)}>
-                            <p>{exp.role}</p>
-                            <p>{exp.company}</p>
-                            <p>{exp.startYear}-{exp.endYear ? exp.endYear : 'Σήμερα'}</p>
+                    {educations.map(edu => (
+                        <div key={edu.id} className='bubble-container' onClick={() => handleEdit(edu.id)}>
+                            <p>{edu.institution}</p>
+                            <p>{edu.degree}</p>
+                            <p>{edu.startYear}-{edu.endYear ? edu.endYear : 'Σήμερα'}</p>
                         </div>
                     ))}
                     <button className='bubble-button' onClick={handleAdd}>+</button>
@@ -199,4 +199,4 @@ const Experience = () => {
     );
 };
 
-export default Experience;
+export default Education;

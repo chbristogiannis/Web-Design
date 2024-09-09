@@ -2,7 +2,10 @@
 import React from 'react';
 import './PersonalDetailsPage.css';
 import Navbar from '../../components/NavBar/NavBar';
-import Experience from '../../components/ExperienceContainer/ExperienceContainer';  // Adjust path as needed
+import Experience from '../../components/ExperienceContainer/ExperienceContainer';
+import Education from '../../components/EducationContainer/EducationContainer';
+import Skill from '../../components/SkillContainer/SkillContainer';
+
 
 const PersonalDetailsPage = () => {
     return (
@@ -11,12 +14,10 @@ const PersonalDetailsPage = () => {
             <div className="personal-details">
                 <h2>Επαγγελματική εμπειρία:</h2>
                 <Experience />
-                <div className="box-container">
-                    <h4>Εκπαίδευση</h4>
-                </div>
-                <div className="box-container">
-                    <h4>Δεξιότητες</h4>
-                </div>
+                <h2>Εκπαίδευση: </h2>
+                <Education />
+                <h2>Δεξιότητες</h2>
+                <Skill/>
             </div>
         </div>
     );
