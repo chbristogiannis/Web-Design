@@ -134,7 +134,7 @@ const Education = () => {
                             <div className='input-container' key={field}>
                                 <span>{field.charAt(0).toUpperCase() + field.slice(1)}*</span>
                                 <input
-                                    type={field === 'startYear' || field === 'endYear' ? 'number' : 'text'}
+                                    type={field === 'startYear' ? 'number' : 'text'}
                                     name={field}
                                     onChange={handleInputChange}
                                     value={form[field]}

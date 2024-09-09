@@ -15,11 +15,16 @@
 	width: 100%;
 	padding: 0 5rem 0 5rem;
 	align-items: center;
+	
+	h2 {
+		color: var(--secondary-text-color);
+		margin-bottom: 1rem;
+	}
 }
 
 .personal-details-box {
 	display: flex;
-	width: 70vw;
+	width: 60vw;
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 	flex-wrap: wrap;
