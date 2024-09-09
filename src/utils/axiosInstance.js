@@ -27,15 +27,12 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     (error) => {
-        if (error.response && error.response.status === 401 || error.response.status === 403) {
+        if (error.response && error.response.status === 403) {
             // Token is expired or invalid, logout the user
             localStorage.removeItem('token');
-            const currentUrl = window.location.pathname;
-            if (currentUrl !== '/login') {
-                // Redirect to login page if the user is not already there
-                const navigate = useNavigate();
-                navigate('/login');
-            }
+            // const currentUrl = window.location.pathname;
+            const navigate = useNavigate();
+            navigate('/login');
         }
         return Promise.reject(error);
     }
