@@ -1,8 +1,10 @@
 // UserDetailPage.js
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
-import {fetchFriendCheck,  fetchUserProfile, fetchFriendRequests, fetchSentFriendRequest, sendFriendRequest, respondToFriendRequest, removeFriend } from '../../services/userService';
+import { fetchFriendCheck, fetchUserProfile, fetchFriendRequests, fetchSentFriendRequest, sendFriendRequest, respondToFriendRequest, removeFriend } from '../../services/userService';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { createChat, fetchChats } from '../../services/chatServices';
 
 import './UserDetailPage.css';
 
@@ -18,6 +20,8 @@ const UserDetailPage = () => {
 	const [isFriend, setIsFriend] = useState(false);
 	const [friendRequestSent, setFriendRequestSent] = useState(false);
 	const [friendRequestReceived, setFriendRequestReceived] = useState(false);
+
+	const navigate = useNavigate();
 
 	const {user: loggedInUser, isAuthenticated, loading: authLoading} = useAuth();
 
@@ -151,6 +155,26 @@ const UserDetailPage = () => {
 		}
 	};
 
+	const handleCreateChat = async () => {
+		try {
+			const chats = await fetchChats();
+			if (!chats) {
+				return;
+			}
+
+			const chat = chats.find(chat => chat.userId1 == id) || chats.find(chat => chat.userId2 == id);
+			if (chat) {
+				navigate(`/ConversationsPage/${chat.id}`);
+				return;
+			}
+			const newChat = await createChat(id);
+			// console.log("created chat", newChat);
+			navigate(`/ConversationsPage/${newChat.id}`);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
 	return (
 		<div className="user-detail-page">
 			<Navbar/>
@@ -179,6 +203,8 @@ const UserDetailPage = () => {
 							<button disabled className='custom-button'> Έχει γίνει αίτημα </button>}
 						{isFriend && 
 							<button onClick={handleRemoveFriend} className='delete-button'> Διαγραφή Επαγγελματία</button>}
+						{isFriend && 
+							<button onClick={handleCreateChat} className='custom-button'> Δημιουργία συζήτησης</button>}
 					</div>
 					<div className="personal-info-container">
 						<h3 className='title'>Δεξιότητες</h3>

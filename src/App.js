@@ -39,7 +39,7 @@ function App() {
 						<Route path="/UserHomePage" element={<UserHomePage />} />
 						<Route path="/NetworkPage" element={<NetworkPage />} />
 						<Route path="/JobListingsPage" element={<JobListingsPage />} />
-						<Route path="/ConversationsPage" element={<ConversationsPage />} />
+						<Route path="/ConversationsPage/:conversationId?" element={<ConversationsPage />} />
 						<Route path="/NotificationsPage" element={<NotificationsPage />} />
 						<Route path="/PersonalDetailsPage" element={<PersonalDetailsPage />} />
 						<Route path="/SettingsPage" element={<SettingsPage />} />

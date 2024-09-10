@@ -1,130 +1,231 @@
-// src/ConversationsPage.js
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+
+import { useAuth } from '../../context/AuthContext';
+
+import AutoResizingTextArea from '../../components/AutoResizingTextArea/AutoResizingTextArea';  // Adjust the import path
+
+import { fetchChats, fetchChatMessages, createMessage, createChat } from '../../services/chatServices';
+
 import './ConversationsPage.css';
 
+import Navbar from '../../components/NavBar/NavBar';
+
 function ConversationsPage() {
-  const [conversations, setConversations] = useState([]);
-  const [selectedConversation, setSelectedConversation] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
+	const [conversations, setConversations] = useState([]);
 
-  useEffect(() => {
-    // Simulate fetching the list of conversations
-    const fetchConversations = async () => {
-      const mockConversations = [
-        { id: 1, professionalName: 'Dr. Smith' },
-        { id: 2, professionalName: 'Dr. Johnson' },
-        { id: 3, professionalName: 'Dr. Williams' },
-      ];
-      setConversations(mockConversations);
-    };
+	const {user, isAuthenticated, loading: authLoading} = useAuth();
 
-    fetchConversations();
-  }, []);
+	const [friendUser, setFriendUser] = useState('');
+	
+	const [messages, setMessages] = useState([]);
+	const [newMessage, setNewMessage] = useState('');
+	const { conversationId } = useParams(); // Get conversationId from URL
+	const navigate = useNavigate(); // Use for navigation
+	
+	const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
+	useEffect(() => {
+		const fetchConversations = async () => {
+			try {
+				const chats = await fetchChats();
+				if (!chats) {
+					return;
+				}
 
-  const handleSelectConversation = async (conversationId) => {
-    setSelectedConversation(conversationId);
+				// Process and keep only relevant friend information
+				const enhancedConversations = chats.map((chat) => {
+					// Determine who the "friend" is by checking who is NOT the current user
+					chat.updatedAt = new Date(chat.updatedAt).toLocaleString('el-GR', options);
 
-    // Simulate fetching messages for the selected conversation
-    const mockMessages = {
-      1: [
-        { id: 1, sender: 'self', text: 'Hello Dr. Smith!', timestamp: '2023-08-20 10:15 AM' },
-        { id: 2, sender: 'other', text: 'Hi! How can I assist you today?', timestamp: '2023-08-20 10:17 AM' },
-      ],
-      2: [
-        { id: 3, sender: 'self', text: 'Good morning, Dr. Johnson!', timestamp: '2023-08-19 9:30 AM' },
-        { id: 4, sender: 'other', text: 'Good morning! Hope you are doing well.', timestamp: '2023-08-19 9:35 AM' },
-      ],
-      3: [
-        { id: 5, sender: 'self', text: 'Hi Dr. Williams, I have a question about my prescription.', timestamp: '2023-08-18 3:45 PM' },
-        { id: 6, sender: 'other', text: 'Of course, what would you like to know?', timestamp: '2023-08-18 3:50 PM' },
-      ],
-    };
+					const isUser1 = chat.user1Id === user.id;
 
-    setMessages(mockMessages[conversationId] || []);
+					const friend = !isUser1
+					? { 
+						id: chat.user1Id,
+						userFirstName: chat.user1FirstName,
+						userLastName: chat.user1LastName,
+						userPhoto: chat.user1Photo 
+						}
+					: { 
+						id: chat.user2Id,
+						userFirstName: chat.user2FirstName,
+						userLastName: chat.user2LastName,
+						userPhoto: chat.user2Photo 
+						};
 
-    // Set the last message as the default value in the textbox
-    const lastMessage = mockMessages[conversationId] ? mockMessages[conversationId][mockMessages[conversationId].length - 1].text : '';
-    setNewMessage(lastMessage);
-  };
+					// Return conversation with only relevant data
+					return {
+						id: chat.id, // Keep the chat id
+						friend, // Store the friend object
+						lastMessage: chat.lastMessage, // Keep last message or relevant data
+						updatedAt: chat.updatedAt // Keep updated timestamp
+					};
+				});
 
-  const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      // Simulate sending a new message
-      const newMessageObject = {
-        id: messages.length + 1,
-        sender: 'self',
-        text: newMessage,
-        timestamp: new Date().toLocaleString(),
-      };
+				// Set the enhanced conversations without redundant user info
+				setConversations(enhancedConversations);
+			} catch (error) {
+				console.error(error);
+			}
+		};
 
-      // Add the new message to the list
-      setMessages([...messages, newMessageObject]);
-      setNewMessage('');
-    }
-  };
+		fetchConversations();
+		
+	}, []);
 
-  return (
-    <div className="conversations-page">
-      <nav className="top-navbar">
-        <ul>
-          <li><a href="/UserHomePage">Αρχική Σελίδα</a></li>
-          <li><a href="/NetworkPage">Δίκτυο</a></li>
-          <li><a href="/JobListingsPage">Αγγελίες</a></li>
-          <li><a href="/ConversationsPage">Συζητήσεις</a></li>
-          <li><a href="/NotificationsPage">Ειδοποιήσεις</a></li>
-          <li><a href="/PersonalDetailsPage">Προσωπικά Στοιχεία</a></li>
-          <li><a href="/SettingsPage">Ρυθμίσεις</a></li>
-        </ul>
-      </nav>
-      <div className="conversation-section">
-        <div className="conversations-list">
-          <h3>Your Conversations</h3>
-          <ul>
-            {conversations.map((conversation) => (
-              <li
-                key={conversation.id}
-                onClick={() => handleSelectConversation(conversation.id)}
-                className={conversation.id === selectedConversation ? 'active' : ''}
-              >
-                {conversation.professionalName}
-              </li>
-            ))}
-          </ul>
-        </div>
 
-        <div className="messages-section">
-          <h3>Messages</h3>
-          {selectedConversation ? (
-            <div className="messages-list">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`message-item ${message.sender === 'self' ? 'self' : 'other'}`}
-                >
-                  <p>{message.text}</p>
-                  <span>{message.timestamp}</span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p>Select a conversation to view messages</p>
-          )}
+	useEffect(() => {
+		if (conversations) {
+			if (!conversationId) {
+				setFriendUser('');
+				return;
+			}
+			handleSelectConversation(parseInt(conversationId, 10));
+		} else {
+			setFriendUser('');
+		}
+	}, [conversationId]); // Depend on conversationId to load messages when URL changes
 
-          {selectedConversation && (
-            <div className="message-input">
-              <textarea
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type your message..."
-              />
-              <button onClick={handleSendMessage}>Send</button>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+	const handleSelectConversation = async (conversationId) => {
+		// Navigate to the selected conversation's page
+
+		const tempname = async () => { 
+			setMessages([]);
+			navigate(`/ConversationsPage/${conversationId}`);
+
+			try {
+				if (conversations.length === 0) {
+					navigate(`/ConversationsPage`);
+					return;
+				}
+				const friend = conversations.find((conversation) => conversation.id === conversationId).friend;
+				setFriendUser(friend);
+
+				const messages = await fetchChatMessages(conversationId);
+				const mappedMessages = messages.map((message) => {
+					return {
+						id: message.id,
+						userId: message.userId,
+						content: message.content,
+						updatedAt: new Date(message.updatedAt).toLocaleString('el-GR', options)
+					};
+				});
+
+				if (!mappedMessages) {
+					return;
+				}
+				setMessages(mappedMessages);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		await tempname();
+	};
+
+	const handleSendMessage = async () => {
+		if (newMessage.trim()) {
+			try {
+				const newMessageObject = await createMessage(conversationId, newMessage);
+				if (!newMessageObject) {
+					return;
+				}
+
+				const mappedMessageObject = {
+					id: newMessageObject.id,
+					userId: newMessageObject.userId,
+					content: newMessageObject.content,
+					updatedAt: new Date(newMessageObject.updatedAt).toLocaleString('el-GR', options)
+				};
+
+				setMessages([...messages, mappedMessageObject]);
+
+			} catch (error) {
+				console.error(error);
+			}
+
+			setNewMessage('');
+		}
+	};
+
+	return (
+		<div className="conversations-page">
+			<Navbar />
+			<div className="conversation-section">
+				<div className="conversations-list">
+					<h3>Οι συζητήσεις σας:</h3>
+					<ul>
+						{conversations.map((conversation) => (
+							<li
+								key={conversation.id}
+								onClick={() => handleSelectConversation(conversation.id)}
+								className={conversation.id === parseInt(conversationId, 10) ? 'active' : ''}
+							>
+								{ conversation.friend.userPhoto 
+								? <img src={conversation.friend.userPhoto} alt="profile" className='micro-profile-picture'/>
+								: <img src='https://via.placeholder.com/100' alt="profile" className='micro-profile-picture'/> 
+								}
+								<div className='list-item'>
+									<p>{conversation.friend.userFirstName} {conversation.friend.userLastName}</p>
+									<span>{conversation.updatedAt}</span>
+								</div>
+							</li>
+						))}
+					</ul>
+				</div>
+
+				<div className="messages-section">
+				<h2>{friendUser && (friendUser.userFirstName + ' ' + friendUser.userLastName)}</h2>
+					
+					{conversationId ? (
+						<div className="messages-list">
+						{messages.map((message) => (
+							<div
+							key={message.id}
+							className={`message-item ${message.userId === user.id ? 'self' : 'other'} box-container`}
+							>
+							{message.userId === user.id && (<img src={user.photo} className='micro-profile-picture'/>)}
+							{message.userId !== user.id && (<img src={friendUser.userPhoto} className='micro-profile-picture'/>)}
+							<div className='message'> 
+								<p>{message.content}</p>
+								<span>{message.updatedAt}</span>
+							</div>
+							
+							</div>
+						))}
+						</div>
+					) : (
+						<p style= {{
+							fontSize: '1.5rem',
+							color: 'var(--secondary-text-color)',
+							height: '100%',
+							textAlign: 'center',
+						}}>Διαλέξτε συζήτηση</p> // Shown when no conversation is selected
+					)}
+
+					{conversationId && ( 
+						<div className="message-input">
+							<AutoResizingTextArea
+								value={newMessage}
+								onChange={(e) => setNewMessage(e.target.value)}
+								placeholder="Aa"
+								onFocus={(event) => event.target.placeholder = ''}
+								onBlur={(event) => event.target.placeholder = 'Aa'}
+								style={{
+									padding: '0.5rem',
+									height: 'auto',
+									maxHeight: '7rem',
+								}}
+							/>
+							<button onClick={handleSendMessage} className='custom-button' style= {{
+								maxHeight: '3rem',
+							}}>Send</button>
+						</div>
+					)}
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default ConversationsPage;
