@@ -42,10 +42,6 @@ function NotificationsPage() {
 					});
 					setFriendRequests(notifications.friendRequests);
 				}
-			
-
-				// console.log(interactionNotification);
-
 
 			} catch (error) {
 				console.error(error);
