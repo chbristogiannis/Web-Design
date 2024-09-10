@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import {fetchFriendCheck,  fetchUserProfile, fetchFriendRequests, fetchSentFriendRequest, sendFriendRequest, respondToFriendRequest, removeFriend } from '../../services/userService';
+import { useAuth } from '../../context/AuthContext';
 
 import './UserDetailPage.css';
 
@@ -17,6 +18,8 @@ const UserDetailPage = () => {
 	const [isFriend, setIsFriend] = useState(false);
 	const [friendRequestSent, setFriendRequestSent] = useState(false);
 	const [friendRequestReceived, setFriendRequestReceived] = useState(false);
+
+	const {user: loggedInUser, isAuthenticated, loading: authLoading} = useAuth();
 
 	useEffect(() => {
 		const getUser = async () => {
@@ -96,7 +99,6 @@ const UserDetailPage = () => {
 				await checkIfFriend();
 				await getFriendRequestsReceived();
 				await getFriendRequestsSent();
-
 			} catch (error) {
 				console.error(error);
 			}
@@ -159,10 +161,10 @@ const UserDetailPage = () => {
 							<img src={user.photo} alt='profile' className='profile-image'/>
 							<div className='profile-name'>{user.firstName} {user.lastName}</div>
 						</div>
-						{(!isFriend && !friendRequestSent && !friendRequestReceived)&& 
-							<button onClick={handleFriendRequest} className='custom-button'> Αίτημα φιλίας</button>}
+						{(!isFriend && !friendRequestSent && !friendRequestReceived && parseInt(loggedInUser.id) !== parseInt(id)) && 
+							<button onClick={handleFriendRequest} className='custom-button'> Αίτημα σύνδεσης</button>}
 						<div>
-							{(!isFriend && friendRequestReceived) && "Έχετε λάβει αίτημα φιλίας"}
+							{(!isFriend && friendRequestReceived) && "Έχετε λάβει αίτημα σύνδεσης"}
 						</div>
 						<div style={{
 							display: 'flex',
@@ -193,7 +195,7 @@ const UserDetailPage = () => {
 							{ education.length === 0 && <p>Δεν υπάρχουν καταχωρημένα στοιχεία</p>}
 							<div className='show-items'>
 								{education.map((ed, index) => (
-									<div key={ed.id} className='bubble-container'>
+									<div key={index} className='bubble-container'>
 										<p>{ed.institution}</p>
 										<p>{ed.degree}</p>
 										<p>{ed.startYear}-{ed.endYear ? ed.endYear : 'Σήμερα'}</p>

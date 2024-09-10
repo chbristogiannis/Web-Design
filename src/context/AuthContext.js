@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('user', JSON.stringify(userInfo));
 
 			setIsAuthenticated(true);
-			setUser(new User(userInfo.firstName, userInfo.lastName, userInfo.hasPhoto, userInfo.photo));
+			setUser(new User(userInfo.id, userInfo.firstName, userInfo.lastName, userInfo.hasPhoto, userInfo.photo));
 
 			navigate('/UserHomePage');  // Redirect to dashboard after login
 		} catch (error) {

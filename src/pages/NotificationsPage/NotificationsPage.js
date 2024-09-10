@@ -1,138 +1,154 @@
 // src/NotificationsPage.js
 import React, { useState, useEffect } from 'react';
+import Navbar from '../../components/NavBar/NavBar';
+import { useNavigate } from 'react-router-dom';
+import Spinner from '../../components/Spinner/Spinner';
+
+
+import { fetchNotifications, deleteNotification } from '../../services/notificationsServices';
 import './NotificationsPage.css';
 
 function NotificationsPage() {
-  const [connectionRequests, setConnectionRequests] = useState([]);
-  const [interactions, setInteractions] = useState([]);
+	const [interactions, setInteractions] = useState([]);
+	const [friendRequests, setFriendRequests] = useState([]);
+	const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Simulate fetching connection requests with dummy data
-    const fetchConnectionRequests = () => {
-      const dummyConnectionRequests = [
-        {
-          id: 1,
-          name: 'John Doe',
-          position: 'Software Engineer',
-          company: 'Tech Solutions Inc.',
-        },
-        {
-          id: 2,
-          name: 'Jane Smith',
-          position: 'Product Manager',
-          company: 'Innovatech Co.',
-        },
-        {
-          id: 3,
-          name: 'Mark Johnson',
-          position: 'UX Designer',
-          company: 'Creative Labs',
-        },
-      ];
-      setConnectionRequests(dummyConnectionRequests);
-    };
+	const navigate = useNavigate();
+	const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
 
-    // Simulate fetching interactions with dummy data
-    const fetchInteractions = () => {
-      const dummyInteractions = [
-        {
-          id: 1,
-          userName: 'Alice Brown',
-          postTitle: '5 Tips for Effective Teamwork',
-          comment: 'Great article! Thanks for sharing.',
-          timestamp: '2 hours ago',
-        },
-        {
-          id: 2,
-          userName: 'David Green',
-          postTitle: 'The Future of AI in Healthcare',
-          comment: 'Very informative. AI is truly changing the game.',
-          timestamp: '1 day ago',
-        },
-        {
-          id: 3,
-          userName: 'Emily White',
-          postTitle: 'How to Stay Productive While Working Remotely',
-          comment: 'This helped me a lot. Thanks!',
-          timestamp: '3 days ago',
-        },
-      ];
-      setInteractions(dummyInteractions);
-    };
+	useEffect(() => {
+		// Simulate fetching connection requests with dummy data
+		const getNotifications = async () => {
+			try {
+				const notifications = await fetchNotifications();
+				console.log(notifications.friendRequests);
+				console.log(notifications.likesAndComments);
 
-    fetchConnectionRequests();
-    fetchInteractions();
-  }, []);
+				//map time to readable format
+				if (!notifications || !notifications.likesAndComments || !notifications.friendRequests) {
+					return;
+				}
 
-  const handleAcceptRequest = (requestId) => {
-    // Simulate accepting the request
-    setConnectionRequests(connectionRequests.filter((req) => req.id !== requestId));
-  };
+				if(notifications.likesAndComments.length !== 0 && notifications.likesAndComments[0] !== null) {
+					notifications.likesAndComments.forEach(notification => {
+						notification.createdAt = new Date(notification.createdAt).toLocaleDateString('el-GR', options);
+					});
+					setInteractions(notifications.likesAndComments);
+				}
+				
+				if (notifications.friendRequests.length !== 0 && notifications.friendRequests[0] !== null) {
+					notifications.friendRequests.forEach(notification => {
+						notification.createdAt = new Date(notification.createdAt).toLocaleDateString('el-GR', options);
+					});
+					setFriendRequests(notifications.friendRequests);
+				}
+			
 
-  const handleRejectRequest = (requestId) => {
-    // Simulate rejecting the request
-    setConnectionRequests(connectionRequests.filter((req) => req.id !== requestId));
-  };
+				// console.log(interactionNotification);
 
-  return (
-    <div className="notifications-page">
-      <nav className="top-navbar">
-        <ul>
-          <li><a href="/UserHomePage">Αρχική Σελίδα</a></li>
-          <li><a href="/NetworkPage">Δίκτυο</a></li>
-          <li><a href="/JobListingsPage">Αγγελίες</a></li>
-          <li><a href="/ConversationsPage">Συζητήσεις</a></li>
-          <li><a href="/NotificationsPage">Ειδοποιήσεις</a></li>
-          <li><a href="/PersonalDetailsPage">Προσωπικά Στοιχεία</a></li>
-          <li><a href="/SettingsPage">Ρυθμίσεις</a></li>
-        </ul>
-      </nav>
-      
-      <div className="connection-requests-section">
-        <h3>Connection Requests</h3>
-        <div className="connection-requests-box">
-          {connectionRequests.length > 0 ? (
-            <ul>
-              {connectionRequests.map((request) => (
-                <li key={request.id}>
-                  <div className="request-info">
-                    <p>{request.name}</p>
-                    <p>{request.position} at {request.company}</p>
-                  </div>
-                  <div className="request-actions">
-                    <button onClick={() => handleAcceptRequest(request.id)}>Accept</button>
-                    <button onClick={() => handleRejectRequest(request.id)}>Reject</button>
-                    <a href={`/profile/${request.id}`} className="view-profile">View Profile</a>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No connection requests.</p>
-          )}
-        </div>
-      </div>
 
-      <div className="interactions-section">
-        <h3>Interest Notes and Comments</h3>
-        <div className="interactions-box">
-          {interactions.length > 0 ? (
-            <ul>
-              {interactions.map((interaction) => (
-                <li key={interaction.id}>
-                  <p><strong>{interaction.userName}</strong> showed interest in your post: "{interaction.postTitle}"</p>
-                  <p>Comment: {interaction.comment}</p>
-                  <span>{interaction.timestamp}</span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No new interactions.</p>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		try {
+			getNotifications();
+			setLoading(false);
+		} catch (error) {
+			console.error(error);
+		}
+
+	}, []);
+
+	const handleViewProfile = (userId) => {
+		console.log('View profile:', userId);
+		navigate(`/UserDetailPage/${userId}`);
+	}
+
+	const handleDeleteNotification = async (notification) => {
+		try {
+			await deleteNotification(notification.notificationId);
+
+			if (notification.type === 'like' || notification.type === 'comment') {
+				setInteractions(interactions.filter(interaction => interaction.notificationId !== notification.notificationId));
+			}
+			if (notification.type === 'friendRequest') {
+				setFriendRequests(friendRequests.filter(request => request.notificationId !== notification.notificationId));
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	return (
+		<div className="notifications-page">
+			<Navbar/>
+			
+			<div className="notification-section">
+				<h3>Αιτήματα σύνδεσης</h3>
+				<div className="box-container notification-container">
+					{loading ? 
+						<Spinner /> :
+						<div>
+							{friendRequests.length > 0 ? (
+								<ul>
+								{friendRequests.map((request) => (
+									<li key={request.notificationId}>
+										{ request.profilePicture ? <img src={request.profilePicture} alt='profile' className='mini-profile-picture' onClick={() => handleViewProfile(request.userId)} style={{cursor:"pointer"}}/> : <img src='https://via.placeholder.com/100' className='mini-profile-picture'  onClick={() => handleViewProfile(request.userId)} style={{cursor:"pointer"}}/> }
+										<p className='notification-text'>{request.firstName} {request.lastName} σας έχει στείλει ένα αίτημα σύνδεσης </p>
+										<span className='date-span'>{request.createdAt}</span>
+										<button className="custom-button"  onClick={() => handleViewProfile(request.userId)} >Προβολή Προφίλ</button>
+										<button className='delete-button' onClick={() => handleDeleteNotification(request)}>x</button>
+									</li>
+								))}
+								</ul>
+							) : (
+								!loading &&
+								<p className='notification-text'>Δεν έχετε αιτήματα σύνδεσης</p>
+							)}
+						</div>
+					}
+				</div>
+			</div>
+
+			<div className="notification-section">
+				<h3>Ειδοποιήσεις ενδιαφέροντος και σχολίων</h3>
+				<div className="box-container notification-container">
+					{loading 
+						? <Spinner/> : 
+						<div>
+							{interactions.length > 0 ? (
+								<ul>
+								{interactions.map((interaction) => (
+									<li key={interaction.notificationId}>
+										{ interaction.profilePicture ? 
+											<img src={interaction.profilePicture} alt='profile' className='mini-profile-picture' onClick={() => handleViewProfile(interaction.userId)} style={{cursor:"pointer", width:"fitContent", minWidth:"3rem"}}/> 
+											: 
+											<img src='https://via.placeholder.com/100' className='mini-profile-picture' onClick={() => handleViewProfile(interaction.userId)} style={{cursor:"pointer", width:"fitContent", minWidth:"3rem"}}/> }
+										{interaction.type === 'like' 
+											&& <p className='notification-text'>{interaction.firstName} {interaction.lastName} σημείωσε το ενδιαφέρον του σε μία από τις αναρτήσεις σας</p>}
+										{interaction.type === 'comment' 
+											&& <div style={{flex:"1"}}>
+												<p className='notification-text'>{interaction.firstName} {interaction.lastName} σχολίασε σε μία από τις αναρτήσεις σας: </p>
+												<p className='comment-container'>{interaction.commentContent}</p>
+											</div>
+										}
+										<span className='date-span'>{interaction.createdAt}</span>
+										<button className='delete-button' onClick={() => handleDeleteNotification(interaction)}>x</button>
+									</li>
+								))}
+								</ul>
+							) : (
+								!loading &&
+								<p className='notification-text'>Δεν έχετε κάποια νέα ειδοποίηση</p>
+							)}
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default NotificationsPage;

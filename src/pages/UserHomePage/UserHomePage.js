@@ -129,6 +129,7 @@ function HomePage() {
 	}
 
 	const handleLike = (postId) => {
+		console.log('Like button clicked', postId);
 		const addLike = async (postId) => {
 			const result = await likePost(postId);
 

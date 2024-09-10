@@ -1,6 +1,7 @@
 // src/models/User.js
 export class User {
-    constructor(firstName, lastName, hasPhoto, photo) {
+    constructor(id, firstName, lastName, hasPhoto, photo) {
+        this.id = id
         this.firstName = firstName;
         this.lastName = lastName;
         this.hasPhoto = hasPhoto;
