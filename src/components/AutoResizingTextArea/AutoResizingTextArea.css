@@ -1,6 +1,6 @@
 .auto-resizing-textarea {
     background-color: var(--container-color);
-    border: 1px solid #999999;
+    border: 1px solid var(--container-border-color);
     border-radius: 1.5rem;
     box-sizing: border-box;
     font-size: 1rem;

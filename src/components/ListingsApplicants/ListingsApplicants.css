@@ -1,0 +1,74 @@
+/* ListingsApplicants.css */
+
+/* Modal Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Ensure it appears on top of everything */
+}
+
+.applacants-list {
+    border-radius: 1rem;
+    margin: 0;
+    padding-left: 0;
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    width: fit-content;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+}
+
+/* Existing styles */
+.listings-applicants {
+    position: relative;
+    width: 50vw;
+}
+
+.applicant-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border: 1px solid #ccc;
+    margin-bottom: .5rem;
+    border-radius: 1rem;
+    width: inherit;
+}
+
+.applicant-details {
+    display: flex;
+    align-items: center;
+
+    span {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: var(--primary-text-color);
+    }
+}
+
+.mini-profile-picture {
+    margin-right: 1rem;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+    color: var(--secondary-text-color);
+}
