@@ -15,7 +15,7 @@ function SettingsPage() {
 
   const handleLogout = async () => {
     await logout();
-    navigate('/login');  // Use the navigate function to redirect to the login
+    navigate('/');  // Use the navigate function to redirect to the login
   };
 
   return (

@@ -1,7 +1,6 @@
 /* src/App.js */
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Outlet } from 'react-router-dom';  // Make sure Outlet is imported
 
 // Import Context
 import { AuthProvider } from './context/AuthContext';  // AuthProvider wraps the app
@@ -10,7 +9,6 @@ import { AuthProvider } from './context/AuthContext';  // AuthProvider wraps the
 import './styles/variables.css';
 
 // Import components
-import PrivateRoute from './components/PrivateRoute';  // For protecting routes
 import RoleBasedRoute from './components/RoleBasedRoute';
 
 // Import pages
@@ -26,6 +24,7 @@ import PersonalDetailsPage from './pages/PersonalDetailsPage/PersonalDetailsPage
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import UserDetailPage from './pages/UserDetailPage/UserDetailPage';
 import ManagerPage from './pages/ManagerPage/ManagerPage';
+import AdminUserPage from './pages/AdminUserPage/AdminUserPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 
@@ -51,6 +50,7 @@ function App() {
 
 					<Route element={<RoleBasedRoute allowedRoles={['admin']} />}>
                         <Route path="/ManagerPage" element={<ManagerPage />} />
+                        <Route path="/AdminUserPage/:userId?" element={<AdminUserPage />} />
                     </Route>
 
 					<Route path="/404" element={<NotFoundPage />} />
