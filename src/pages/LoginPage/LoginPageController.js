@@ -1,11 +1,11 @@
-import AuthContext from '../../context/AuthContext';  // Import the Auth context
+import { useAuth } from '../../context/AuthContext';  // Import the Auth context
 import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 import { useState, useContext } from 'react';
 
 const LoginPageController = () => {
     const navigate = useNavigate();  // Use the useNavigate hook to navigate to different pages
 
-    const { login } = useContext(AuthContext);  // Access the login function from context
+    const { login } = useAuth();  // Access the login function from context
 	const [formData, setFormData] = useState({
 		email: '',
 		password: '',

@@ -2,7 +2,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { login as loginService, logout as logoutService } from '../services/authServices';  // Import login, logout services
 import { useNavigate } from 'react-router-dom';
-import { User } from '../models/User';
 
 // Create the AuthContext
 const AuthContext = createContext();
@@ -15,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
 
 	const validateUser = (userData) => {
-        return userData && userData.firstName && userData.lastName;
+        return userData && userData.firstName && userData.lastName && userData.isAdmin !== undefined;
     };
 
 	// Check if the user is authenticated on initial render
@@ -23,33 +22,28 @@ export const AuthProvider = ({ children }) => {
 		const token = localStorage.getItem('token');
 		const storedUser = localStorage.getItem('user');
 
-		if (token) {
-			if (storedUser) {
-				const userInfo = JSON.parse(storedUser);
+		if (token && storedUser) {
+			const userInfo = JSON.parse(storedUser);
 
-				if(validateUser(userInfo)) {
-					setIsAuthenticated(true);
-					setUser(JSON.parse(storedUser));  // Restore user from localStorage
-				}
-				else {
-					logout();
-				}
-            } else {
-				logout();
+			if(validateUser(userInfo)) {
+				setIsAuthenticated(true);
+				setUser(JSON.parse(storedUser));  // Restore user from localStorage
+			}
+			else {
+				setIsAuthenticated(false);
+				// logout();
 			}
 		} else {
-			logout();
+			setIsAuthenticated(false);
 		}
 		setLoading(false);  // Stop loading whether token exists or not
 	}, []);
 
 	// Function to log in the user
 	const login = async (email, password) => {
-		console.log('Logging in');
 		try {
-			const response = await loginService(email, password);  // Call login service
-			const token = response.token;
-			const userInfo = response.userInfo;
+			const response = await loginService(email, password);
+			const {token, userInfo} = response;
 
 			if (!token || !userInfo) {
 				throw new Error('Invalid response from server');
@@ -63,22 +57,24 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('user', JSON.stringify(userInfo));
 
 			setIsAuthenticated(true);
-			setUser(new User(userInfo.id, userInfo.firstName, userInfo.lastName, userInfo.hasPhoto, userInfo.photo));
+			setUser(userInfo);
 
-			navigate('/UserHomePage');  // Redirect to dashboard after login
+			if(userInfo.isAdmin) {
+				navigate('/ManagerPage');
+				return;
+			} 
+			navigate('/UserHomePage');
 		} catch (error) {
-			throw error;  // Let the calling component handle the error
+			throw error;
 		}
 	};
 
 	// Function to log out the user
 	const logout = () => {
-		console.log('Logging out');
-		logoutService();  // Call logout service to clear token amn user
+		logoutService();
 		setIsAuthenticated(false);
 		setUser(null);
-
-		navigate('/login');  // Redirect to login page after logout
+		navigate('/login');
 	};
 
 	return (

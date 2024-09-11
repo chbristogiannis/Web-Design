@@ -11,6 +11,7 @@ import './styles/variables.css';
 
 // Import components
 import PrivateRoute from './components/PrivateRoute';  // For protecting routes
+import RoleBasedRoute from './components/RoleBasedRoute';
 
 // Import pages
 import WelcomePage from './pages/WelcomePage/WelcomePage';
@@ -25,6 +26,7 @@ import PersonalDetailsPage from './pages/PersonalDetailsPage/PersonalDetailsPage
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import UserDetailPage from './pages/UserDetailPage/UserDetailPage';
 import ManagerPage from './pages/ManagerPage/ManagerPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 
 function App() {
@@ -35,17 +37,24 @@ function App() {
 					<Route path="/" element={<WelcomePage />} />
 					<Route path="/Register" element={<RegisterPage />} />
 					<Route path="/login" element={<LoginPage />} />
-					<Route element={<PrivateRoute> <Outlet /> </PrivateRoute>}>
-						<Route path="/UserHomePage" element={<UserHomePage />} />
-						<Route path="/NetworkPage" element={<NetworkPage />} />
-						<Route path="/JobListingsPage" element={<JobListingsPage />} />
-						<Route path="/ConversationsPage/:conversationId?" element={<ConversationsPage />} />
-						<Route path="/NotificationsPage" element={<NotificationsPage />} />
-						<Route path="/PersonalDetailsPage" element={<PersonalDetailsPage />} />
-						<Route path="/SettingsPage" element={<SettingsPage />} />
-						<Route path="/UserDetailPage/:id" element={<UserDetailPage />} />
-						<Route path="/ManagerPage" element={<ManagerPage />} />
-					</Route>
+
+					<Route element={<RoleBasedRoute allowedRoles={['user']} />}>
+                        <Route path="/UserHomePage" element={<UserHomePage />} />
+                        <Route path="/NetworkPage" element={<NetworkPage />} />
+                        <Route path="/JobListingsPage" element={<JobListingsPage />} />
+                        <Route path="/ConversationsPage/:conversationId?" element={<ConversationsPage />} />
+                        <Route path="/NotificationsPage" element={<NotificationsPage />} />
+                        <Route path="/PersonalDetailsPage" element={<PersonalDetailsPage />} />
+                        <Route path="/SettingsPage" element={<SettingsPage />} />
+                        <Route path="/UserDetailPage/:id" element={<UserDetailPage />} />
+                    </Route>
+
+					<Route element={<RoleBasedRoute allowedRoles={['admin']} />}>
+                        <Route path="/ManagerPage" element={<ManagerPage />} />
+                    </Route>
+
+					<Route path="/404" element={<NotFoundPage />} />
+					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
 			</AuthProvider>
 		</Router>
