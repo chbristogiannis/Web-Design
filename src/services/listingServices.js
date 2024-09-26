@@ -52,4 +52,17 @@ const fetchListingApplicants = async (listingId) => {
     }
 }
 
-export { fetchListings, createListing, applyToListing, fetchListingApplicants };
+const markListingAsSeen = async (listingId) => {
+    try {
+        const response = await axiosInstance.post(`/listings/${listingId}/seen/`);
+
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            console.error(error.response.data);
+        }
+        return null;
+    }
+}
+
+export { fetchListings, createListing, applyToListing, fetchListingApplicants, markListingAsSeen };
