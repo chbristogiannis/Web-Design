@@ -83,7 +83,7 @@
   margin: 2rem 5rem 2rem 0rem;
   border-radius: 1rem;
 
-  h2 {
+  h3 {
     text-align: center;
     color: var(--primary-text-color);
     padding-bottom: .5rem;
@@ -106,7 +106,8 @@
   width: fit-content;
   max-width: 60%;
   box-shadow: 0 .0 1rem rgba(0, 0, 0, 0.1);
-  display: flex;align-items: center;
+  display: flex;
+  align-items: flex-end;
   gap: 1rem;
 
 }
@@ -117,7 +118,7 @@
   /* border: 1px solid var(--blue-color); */
   flex-direction: row-reverse;
   margin-left: auto;
-  text-align: right;
+  /* text-align: right; */
 
   .message {
       display: flex;

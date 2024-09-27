@@ -49,4 +49,13 @@ const getUsersDataJSON = async (selectedUsers) => {
     }
 };
 
-export { getAllUsers, getUserById, getUsersDataXML, getUsersDataJSON };
+const createDummyData = async () => {
+    try {
+        const response = await axiosInstance.post('/post/dummy');
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response.data.message);
+    }
+}
+
+export { getAllUsers, getUserById, getUsersDataXML, getUsersDataJSON, createDummyData };

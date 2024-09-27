@@ -53,7 +53,7 @@ const fetchListingApplicants = async (listingId) => {
 }
 
 const markListingAsSeen = async (listingId) => {
-    try {
+    try { 
         const response = await axiosInstance.post(`/listings/${listingId}/seen/`);
 
         return response.data;

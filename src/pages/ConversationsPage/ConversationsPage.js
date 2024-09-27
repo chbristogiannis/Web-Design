@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 
 import AutoResizingTextArea from '../../components/AutoResizingTextArea/AutoResizingTextArea';  // Adjust the import path
 
-import { fetchChats, fetchChatMessages, createMessage, createChat } from '../../services/chatServices';
+import { fetchChats, fetchChatMessages, createMessage } from '../../services/chatServices';
 
 import './ConversationsPage.css';
 
@@ -14,7 +14,7 @@ import Navbar from '../../components/NavBar/NavBar';
 function ConversationsPage() {
 	const [conversations, setConversations] = useState([]);
 
-	const {user, isAuthenticated, loading: authLoading} = useAuth();
+	const {user} = useAuth();
 
 	const [friendUser, setFriendUser] = useState('');
 	
@@ -74,18 +74,6 @@ function ConversationsPage() {
 	}, []);
 
 
-	useEffect(() => {
-		if (conversations) {
-			if (!conversationId) {
-				setFriendUser('');
-				return;
-			}
-			handleSelectConversation(parseInt(conversationId, 10));
-		} else {
-			setFriendUser('');
-		}
-	}, [conversationId]); // Depend on conversationId to load messages when URL changes
-
 	const handleSelectConversation = async (conversationId) => {
 		// Navigate to the selected conversation's page
 
@@ -122,6 +110,19 @@ function ConversationsPage() {
 
 		await tempname();
 	};
+
+	useEffect(() => {
+		if (conversations) {
+			if (!conversationId) {
+				setFriendUser('');
+				return;
+			}
+			handleSelectConversation(parseInt(conversationId, 10));
+		} else {
+			setFriendUser('');
+		}
+	}, [conversationId]); // Depend on conversationId to load messages when URL changes
+
 
 	const handleSendMessage = async () => {
 		if (newMessage.trim()) {
@@ -172,25 +173,27 @@ function ConversationsPage() {
 							</li>
 						))}
 					</ul>
+					{conversations.length === 0 && (<span>Δεν υπάρχουν συνομιλίες</span>)}
 				</div>
 
 				<div className="messages-section">
-				<h2>{friendUser && (friendUser.userFirstName + ' ' + friendUser.userLastName)}</h2>
+				<h3>{friendUser && (friendUser.userFirstName + ' ' + friendUser.userLastName)}</h3>
 					
 					{conversationId ? (
 						<div className="messages-list">
 						{messages.map((message) => (
 							<div
-							key={message.id}
-							className={`message-item ${message.userId === user.id ? 'self' : 'other'} box-container`}
-							>
-							{message.userId === user.id && (<img src={user.photo} className='micro-profile-picture'/>)}
-							{message.userId !== user.id && (<img src={friendUser.userPhoto} className='micro-profile-picture'/>)}
-							<div className='message'> 
-								<p>{message.content}</p>
-								<span>{message.updatedAt}</span>
-							</div>
-							
+								key={message.id}
+								className={`message-item ${message.userId === user.id ? 'self' : 'other'} box-container`}
+								>
+								{(message.userId === user.id && user.photo) && (<img src={user.photo} alt="profPicture" className='micro-profile-picture'/>)}
+								{(message.userId === user.id && !user.photo) && (<img src={'https://via.placeholder.com/100'} alt="profPicture" className='micro-profile-picture'/>)}
+								{(message.userId !== user.id && friendUser.userPhoto) && (<img src={friendUser.userPhoto} alt="profPicture" className='micro-profile-picture'/>)}
+								{(message.userId !== user.id && !friendUser.userPhoto) && (<img src={'https://via.placeholder.com/100'} alt="profPicture" className='micro-profile-picture'/>)}
+								<div className='message'> 
+									<p>{message.content}</p>
+									<span>{message.updatedAt}</span>
+								</div>
 							</div>
 						))}
 						</div>
@@ -219,7 +222,7 @@ function ConversationsPage() {
 							/>
 							<button onClick={handleSendMessage} className='custom-button' style= {{
 								maxHeight: '3rem',
-							}}>Send</button>
+							}}>Αποστολή</button>
 						</div>
 					)}
 				</div>

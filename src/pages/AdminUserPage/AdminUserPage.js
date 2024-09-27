@@ -66,9 +66,6 @@ const AdminUserPage = () => {
                     <label>phoneNumber:</label><p>{user.phoneNumber}</p>
                 </div>
                 <div className='user-info'>
-                    <label>email:</label><p>{user.email}</p>
-                </div>
-                <div className='user-info'>
                     <label>createdAt:</label><p>{formattedDate}</p>
                 </div>
             </div>

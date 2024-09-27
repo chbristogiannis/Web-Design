@@ -6,7 +6,7 @@ import './ManagerPage.css'
 
 
 
-import { getAllUsers, getUserById, getUsersDataXML, getUsersDataJSON } from '../../services/adminServices';
+import { getAllUsers, getUserById, getUsersDataXML, getUsersDataJSON, createDummyData } from '../../services/adminServices';
 
 import Spinner from '../../components/Spinner/Spinner';
 
@@ -17,7 +17,6 @@ const UserListPage = () => {
 
     const { logout } = useContext(AuthContext);
 
-	
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -99,6 +98,23 @@ const UserListPage = () => {
 		fetchXML();
 	};
 
+	const handleCreateDummyData = () => {
+		const fetchDummyData = async () => {
+			try {
+				setLoading(true);
+				await createDummyData(); // Assuming this function makes the request
+
+				// Refresh the user list after creating dummy data
+				const data = await getAllUsers();
+				setUsers(data);
+				setLoading(false);
+			} catch (error) {
+				console.error('Error creating dummy data:', error);
+			}
+		};
+		fetchDummyData();
+	}
+
 	const handleDisconnect = async () => {
 		await logout();
     	navigate('/');  // Use the navigate function to redirect to the login
@@ -110,24 +126,30 @@ const UserListPage = () => {
 
 	return (
 		<div className="user-list-page">
-			<h2>Λίστα όλων των χρηστών:</h2>
-			<ul className="user-list">
-				{users.map(user => (
-				<li key={user.id} className="user-item box-container">
-					<input
-						type="checkbox"
-						checked={selectedUsers.includes(user.id)}
-						onChange={() => handleSelectUser(user.id)}
-					/>
-					<span onClick={() => handleUserClick(user.id)}> id: {user.id} | {user.firstName} | {user.lastName}</span>
-				</li>
-				))}
-			</ul>
+			<div className='top-buttons'>
+				<button onClick={handleCreateDummyData} className='custom-button' >Δημιουργία dummy Data</button>
+				<button onClick={handleDisconnect} className='delete-button' >Αποσύνδεση</button>
+			</div>
 			<div className="export-buttons">
 				<button onClick={() => exportToJSON()} className='custom-button'>Export JSON</button>
 				<button onClick={() => convertToXML()} className='custom-button'>Export XML</button>
 			</div>
-			<button onClick={handleDisconnect} className='delete-button' style={{marginTop: "1rem"}}>Αποσύνδεση</button>
+			<div className='list-container'>
+				<h2>Λίστα όλων των χρηστών:</h2>
+				<ul className="user-list">
+					{users.map(user => (
+					<li key={user.id} className="user-item box-container">
+						<input
+							type="checkbox"
+							checked={selectedUsers.includes(user.id)}
+							onChange={() => handleSelectUser(user.id)}
+						/>
+						<span onClick={() => handleUserClick(user.id)}> id: {user.id} | {user.firstName} | {user.lastName}</span>
+					</li>
+					))}
+				</ul>
+			</div>
+			
 		</div>
 	);
 };
