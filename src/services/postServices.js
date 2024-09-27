@@ -86,4 +86,20 @@ const getPostComments = async (postId) => {
     }
 };
 
-export { getPosts, createPost, likePost, commentPost, getPostComments };
+const removeLike = async (postId) => {
+    try {
+        if (!postId) {
+            throw new Error('Invalid postId');
+        }
+
+        const response = await axiosInstance.delete(`post/${postId}/unLikePost`);
+
+        return response.data;
+    } catch (error) {
+        console.error('Error:', error.message);
+
+        return null;
+    }
+};
+
+export { getPosts, createPost, likePost, commentPost, getPostComments,removeLike };

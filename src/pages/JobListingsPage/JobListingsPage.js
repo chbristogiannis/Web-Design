@@ -57,9 +57,9 @@ function JobListingsPage() {
         <div className="job-listings-page">
             <Navbar />
 			<div className='button-section'>
-				<button className={`message-item ${!showMyListings ? 'active' : 'custom-button'} `} onClick={() => setShowMyListings(false)}>Αγγελίες</button>
-				<button className={`message-item ${showMyListings ? 'active' : 'custom-button'} `}  onClick={() => setShowMyListings(true)}>Οι Αγγελίες μου</button>
-				<button className={`message-item ${formActive ? 'active' : 'custom-button'} `} onClick={() => {setFormActive(!formActive)}}>Δημιουργία νέας αγγελίας</button>
+				<button className={`message-item ${!showMyListings ? 'custom-button' : 'non-active'} `} onClick={() => setShowMyListings(false)}>Αγγελίες</button>
+				<button className={`message-item ${showMyListings ? 'custom-button' : 'non-active'} `}  onClick={() => setShowMyListings(true)}>Οι Αγγελίες μου</button>
+				<button className={`message-item ${formActive ? 'custom-button' : 'non-active'} `} onClick={() => {setFormActive(!formActive)}}>Δημιουργία νέας αγγελίας</button>
 			</div>
 			{formActive && <ListingsForm onAddListing={handleAddListing} />}
             <ListingsList updatedListings={listings} user={user} showMyListings={showMyListings} />

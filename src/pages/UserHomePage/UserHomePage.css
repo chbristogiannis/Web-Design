@@ -183,3 +183,34 @@
 
 	
 }
+
+.like-button { 
+	color: white !important;
+	padding: 0.5rem 2rem 0.5rem 2rem !important;
+	font-size: 1.125rem !important;
+	font-weight: 500 !important;
+	background-color: #c7c8cc !important;
+	border-radius: 1.5rem !important;
+	border: none !important;
+	transition: background-color 0.3s ease, transform 0.1s ease;
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--button-bg-color-hover) !important;
+	}
+
+	.active {
+		transform: scale(0.98);
+	}
+
+	&:focus {
+		outline: 1px solid var(--light-blue-color);
+		/* border: ; */
+		transform: scale(0.98);
+	}
+
+	&:disabled {
+		background-color: var(--button-bg-color-disabled) !important;
+		cursor: not-allowed;
+	}
+}

@@ -8,7 +8,7 @@ import Navbar from '../../components/NavBar/NavBar';  // Adjust the import path
 import DeleteButton from '../../components/Delete-Button';
 import Spinner from '../../components/Spinner/Spinner'; // Import the Spinner component
 
-import { createPost , getPosts, likePost, commentPost, getPostComments } from '../../services/postServices';
+import { createPost , getPosts, likePost, commentPost, getPostComments, removeLike as removeLikeService } from '../../services/postServices';
 
 import './UserHomePage.css';
 
@@ -37,11 +37,11 @@ function HomePage() {
 				setLoading(true);  // Start loading
 				const response = await getPosts();
 				const mappedResponse = response.map(post => {
-					let { id, text, file, fileType, firstName, lastName, photo } = post;
+					let { id, text, file, fileType, firstName, lastName, photo, likedByUser } = post;
 					if (photo === null) {
 						photo = 'https://via.placeholder.com/100';
 					}
-					return { id, text, file, fileType, firstName, lastName, photo };
+					return { id, text, file, fileType, firstName, lastName, photo, likedByUser };
 				});
 				await setPosts(mappedResponse);  // Update state with posts
 				setLoading(false);  // Stop loading
@@ -129,17 +129,81 @@ function HomePage() {
 	}
 
 	const handleLike = (postId) => {
-		console.log('Like button clicked', postId);
 		const addLike = async (postId) => {
-			const result = await likePost(postId);
+			try {
+				if (!postId) {
+					throw new Error('Invalid postId');
+				}
 
-			if (!result) {
-				console.error('Failed to like post');
-				alert('Something went wrong while liking the post.');
+				const response = await likePost(postId);
+				if (!response) {
+					console.error('Failed to like post');
+					alert('Something went wrong while liking the post.');
+				}
+
+				// Add like from the post on the front end
+				setPosts(prevPosts => prevPosts.map(post => {
+					if (post.id === postId) {
+						return {
+							...post,
+							likedByUser: true
+						};
+					}
+					return post;
+				}));
+
+				return response.data;
+			} catch (error) {
+				if (error.response) {
+					console.error('Error:', error.response);
+				} else {
+					console.error('Error:', error.message);
+				}
+
+				return null;  // Return null to prevent the app from crashing
 			}
 		}
 
 		addLike(postId);
+	};
+
+	const handleRemoveLike = (postId) => {
+		const removeLike = async (postId) => {
+			try {
+				if (!postId) {
+					throw new Error('Invalid postId');
+				}
+
+				const response = await removeLikeService(postId);
+				if (!response) {
+					console.error('Failed to remove like from post');
+					alert('Something went wrong while removing the like from the post.');
+				}
+
+				// Remove like from the post on the front end
+				setPosts(prevPosts => prevPosts.map(post => {
+					if (post.id === postId) {
+						return {
+							...post,
+							likedByUser: false
+						};
+					}
+					return post;
+				}));
+
+				return response.data;
+			} catch (error) {
+				if (error.response) {
+					console.error('Error:', error.response);
+				} else {
+					console.error('Error:', error.message);
+				}
+
+				return null;  // Return null to prevent the app from crashing
+			}
+		};
+
+		removeLike(postId);
 	};
 
 	const onSumitButtonClicked = () => {
@@ -316,8 +380,9 @@ function HomePage() {
 								)}
 							</div>
 							<div className="post-actions">
-								<button className="custom-button" onClick={() => handleLike(post.id)}>Ενδιαφέρον</button>
-								<button className="custom-button" 
+								{ post.likedByUser ? <button className="custom-button" onClick={() => handleRemoveLike(post.id)}>Αφαίρεση Ενδιαφέροντος</button> :
+								<button className="like-button" onClick={() => handleLike(post.id)}>Ενδιαφέρον</button>}
+								<button className="like-button" 
 									onClick={() => handleCommentClick(post.id)}>Σχόλια</button>
 							</div>
 							{ commentFocus === post.id ? 
