@@ -4,6 +4,7 @@ import './JobListingsPage.css';
 import { fetchListings } from '../../services/listingServices';
 import Navbar from '../../components/NavBar/NavBar';
 import { useAuth } from '../../context/AuthContext';
+import Spinner from '../../components/Spinner/Spinner';
 
 import ListingsForm from './ListingsForm';
 import ListingsList from './ListingsList';
@@ -14,9 +15,12 @@ function JobListingsPage() {
 	const [formActive, setFormActive] = useState(false);
 	const [showMyListings, setShowMyListings] = useState(false);
 
+    const [loading, setLoading] = useState(true);
+
     // Fetch listings when the component mounts
     useEffect(() => {
         const fetchAllListings = async () => {
+            setLoading(true);
             const fetchedListings = await fetchListings();
 			// User photo 
 
@@ -32,7 +36,7 @@ function JobListingsPage() {
 			});
 
             setListings(mappedListings); // Populate listings with data from the API
-
+            setLoading(false);
         };
         fetchAllListings();
     }, []);
@@ -52,6 +56,10 @@ function JobListingsPage() {
         // Add the new listing to the listings array
         setListings((prevListings) => [userListing, ...prevListings]);
     };
+
+    if (loading || authLoading) {
+        return <Spinner />;
+    }
 
     return (
         <div className="job-listings-page">
