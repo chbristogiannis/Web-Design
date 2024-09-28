@@ -1,4 +1,4 @@
-// src/UserHomePage.js
+// src/TimelinePage.js
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -10,11 +10,11 @@ import Spinner from '../../components/Spinner/Spinner'; // Import the Spinner co
 
 import { createPost , getPosts, likePost, commentPost, getPostComments, removeLike as removeLikeService } from '../../services/postServices';
 
-import './UserHomePage.css';
+import './TimelinePage.css';
 
 import blankPage from '../../assets/blank-page.png';
 
-function HomePage() {
+function TimelinePage() {
 	const {user, isAuthenticated, loading: authLoading} = useAuth();
 	const navigate = useNavigate();
 
@@ -417,5 +417,5 @@ function HomePage() {
 	);
 }
 
-export default HomePage;
+export default TimelinePage;
 

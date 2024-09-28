@@ -8,7 +8,7 @@ const Navbar = () => {
             <ul>
                 <li>
                 <NavLink 
-                    to="/UserHomePage" 
+                    to="/TimelinePage" 
                     className={({ isActive }) => isActive ? "active-link" : ""}
                 >
                     Αρχική Σελίδα

@@ -65,7 +65,7 @@ function NetworkPage() {
 
 	const handleProfessionalClick = (id) => {
 		// console.log('clicked', id);
-		const navigateLink = `/UserDetailPage/${id}`;
+		const navigateLink = `/UserProfilePage/${id}`;
 		navigate(navigateLink);
 		// window.location.href = `/professional/${id}`;
 	};

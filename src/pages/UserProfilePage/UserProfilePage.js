@@ -1,4 +1,4 @@
-// UserDetailPage.js
+// UserProfilePage.js
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchFriendCheck, fetchUserProfile, fetchFriendRequests, fetchSentFriendRequest, sendFriendRequest, respondToFriendRequest, removeFriend } from '../../services/userService';
@@ -6,11 +6,11 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { createChat, fetchChats } from '../../services/chatServices';
 
-import './UserDetailPage.css';
+import './UserProfilePage.css';
 
 import Navbar from '../../components/NavBar/NavBar';
 
-const UserDetailPage = () => {
+const UserProfilePage = () => {
 	const { id } = useParams();
 	const [user, setUser] = useState(null);
 	const [skills, setSkills] = useState([]);
@@ -250,4 +250,4 @@ const UserDetailPage = () => {
 	);
 };
 
-export default UserDetailPage;
+export default UserProfilePage;

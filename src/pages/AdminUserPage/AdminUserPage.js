@@ -69,7 +69,7 @@ const AdminUserPage = () => {
                     <label>createdAt:</label><p>{formattedDate}</p>
                 </div>
             </div>
-            <button onClick={() => navigate('/ManagerPage')} className='custom-button'>Back to Users</button>
+            <button onClick={() => navigate('/AdminPage')} className='custom-button'>Back to Users</button>
         </div>
     );
 }

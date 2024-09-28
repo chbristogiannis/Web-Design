@@ -59,7 +59,7 @@ function NotificationsPage() {
 
 	const handleViewProfile = (userId) => {
 		console.log('View profile:', userId);
-		navigate(`/UserDetailPage/${userId}`);
+		navigate(`/UserProfilePage/${userId}`);
 	}
 
 	const handleDeleteNotification = async (notification) => {

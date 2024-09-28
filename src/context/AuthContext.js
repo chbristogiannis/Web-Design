@@ -60,10 +60,10 @@ export const AuthProvider = ({ children }) => {
 			setUser(userInfo);
 
 			if(userInfo.isAdmin) {
-				navigate('/ManagerPage');
+				navigate('/AdminPage');
 				return;
 			} 
-			navigate('/UserHomePage');
+			navigate('/TimelinePage');
 		} catch (error) {
 			throw error;
 		}

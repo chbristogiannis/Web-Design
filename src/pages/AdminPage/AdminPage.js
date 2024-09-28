@@ -1,8 +1,8 @@
-// ManagerPage.js
+// AdminPage.js
 import React, { useState, useEffect, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
-import './ManagerPage.css'
+import './AdminPage.css'
 
 
 
@@ -10,7 +10,7 @@ import { getAllUsers, getUserById, getUsersDataXML, getUsersDataJSON, createDumm
 
 import Spinner from '../../components/Spinner/Spinner';
 
-const UserListPage = () => {
+const AdminPage = () => {
 	const [users, setUsers] = useState([]);
 	const [selectedUsers, setSelectedUsers] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -173,4 +173,4 @@ const UserListPage = () => {
 	);
 };
 
-export default UserListPage;
+export default AdminPage;
