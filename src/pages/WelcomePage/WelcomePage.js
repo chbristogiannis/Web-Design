@@ -9,8 +9,8 @@ function WelcomePage() {
         <nav className="navbar">
           <h1 className="brand">Professional Network</h1>
           <div className="nav-links">
-            <button onClick={() => window.location.href = '/register'}>Εγγραφή</button>
-            <button onClick={() => window.location.href = '/login'}>Σύνδεση</button>
+            <button className="custom-button" onClick={() => window.location.href = '/register' }>Εγγραφή</button>
+            <button className="custom-button" onClick={() => window.location.href = '/login'}>Σύνδεση</button>
           </div>
         </nav>
         <main className="welcome-content">
