@@ -1,10 +1,13 @@
 // UserProfilePage.js
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchFriendCheck, fetchUserProfile, fetchFriendRequests, fetchSentFriendRequest, sendFriendRequest, respondToFriendRequest, removeFriend } from '../../services/userService';
+import { fetchFriendCheck, fetchUserProfile, fetchFriendRequests, fetchSentFriendRequest } from '../../services/userService';
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { createChat, fetchChats } from '../../services/chatServices';
+
+import ProfileDetails from './ProfileDetails';
+import Skills from './Skills';
+import Education from './Education';
+import Experience from './Experience';
 
 import './UserProfilePage.css';
 
@@ -20,8 +23,6 @@ const UserProfilePage = () => {
 	const [isFriend, setIsFriend] = useState(false);
 	const [friendRequestSent, setFriendRequestSent] = useState(false);
 	const [friendRequestReceived, setFriendRequestReceived] = useState(false);
-
-	const navigate = useNavigate();
 
 	const {user: loggedInUser, isAuthenticated, loading: authLoading} = useAuth();
 
@@ -111,138 +112,26 @@ const UserProfilePage = () => {
 		getRequiredData();
 	}, [id]);
 
-	const handleFriendRequest = async () => {
-		try {
-			const response = await sendFriendRequest(id);
-			if (!response) {
-				return;
-			}
-			setFriendRequestSent(true);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
-	const handleFriendRequestResponse = async (action) => {
-		try {
-			await respondToFriendRequest(id, action);
-			if (!action) {
-				return;
-			}
-
-			setFriendRequestReceived(false);
-			if (action) { 
-				setIsFriend(true);
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
-	const handleFriendRequestAccept = () => {
-		handleFriendRequestResponse("accept");
-	};
-	const handleFriendRequestDecline = () => {
-		handleFriendRequestResponse("reject");
-	}
-
-	const handleRemoveFriend = () => {
-		try {
-			removeFriend(id);
-			setIsFriend(false);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
-	const handleCreateChat = async () => {
-		try {
-			const chats = await fetchChats();
-			if (!chats) {
-				return;
-			}
-
-			const chat = chats.find(chat => chat.userId1 == id) || chats.find(chat => chat.userId2 == id);
-			if (chat) {
-				navigate(`/ConversationsPage/${chat.id}`);
-				return;
-			}
-			const newChat = await createChat(id);
-			// console.log("created chat", newChat);
-			navigate(`/ConversationsPage/${newChat.id}`);
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
 	return (
 		<div className="user-detail-page">
 			<Navbar/>
 			{user && (
 				<div className='container'>
-					<div className='profile'>
-						<div className='box-container'>
-							<img src={user.photo} alt='profile' className='profile-image'/>
-							<div className='profile-name'>{user.firstName} {user.lastName}</div>
-						</div>
-						{(!isFriend && !friendRequestSent && !friendRequestReceived && parseInt(loggedInUser.id) !== parseInt(id)) && 
-							<button onClick={handleFriendRequest} className='custom-button'> Αίτημα σύνδεσης</button>}
-						<div>
-							{(!isFriend && friendRequestReceived) && "Έχετε λάβει αίτημα σύνδεσης"}
-						</div>
-						<div style={{
-							display: 'flex',
-							gap: '.5rem',
-						}}>
-							{(!isFriend && friendRequestReceived) && 
-								<button onClick={handleFriendRequestAccept} className='green-button'> Αποδοχή</button>}
-							{(!isFriend && friendRequestReceived) && 
-								<button onClick={handleFriendRequestDecline} className='delete-button'> Απόρρυψη</button>}
-						</div>
-						{(!isFriend && friendRequestSent)  && 
-							<button disabled className='custom-button'> Έχει γίνει αίτημα </button>}
-						{isFriend && 
-							<button onClick={handleRemoveFriend} className='delete-button'> Διαγραφή Επαγγελματία</button>}
-						{isFriend && 
-							<button onClick={handleCreateChat} className='custom-button'> Δημιουργία συζήτησης</button>}
-					</div>
+					<ProfileDetails
+						id={id}
+						user={user} 
+						isFriend={isFriend} 
+						setIsFriend={setIsFriend}
+						friendRequestSent={friendRequestSent}
+						setFriendRequestSent={setFriendRequestSent}
+						friendRequestReceived={friendRequestReceived}
+						setFriendRequestReceived={setFriendRequestReceived}
+						loggedInUser={loggedInUser}
+					/>
 					<div className="personal-info-container">
-						<h3 className='title'>Δεξιότητες</h3>
-						<div className="box-container personal-details-box">
-							{ skills.length === 0 && <p>Δεν υπάρχουν καταχωρημένα στοιχεία</p>}
-							<div className='show-items'>
-								{skills.map((skill, index) => (
-									<p key={index} className='bubble-container'>{skill.skill}</p>
-								))}
-							</div>
-						</div>
-						<h3>Εκπαίδευση</h3>
-						<div className="box-container personal-details-box">
-							{ education.length === 0 && <p>Δεν υπάρχουν καταχωρημένα στοιχεία</p>}
-							<div className='show-items'>
-								{education.map((ed, index) => (
-									<div key={index} className='bubble-container'>
-										<p>{ed.institution}</p>
-										<p>{ed.degree}</p>
-										<p>{ed.startYear}-{ed.endYear ? ed.endYear : 'Σήμερα'}</p>
-									</div>
-								))}
-							</div>
-							</div>
-						{/* </div> */}
-						<h3 className='title'>Εμπειρία</h3>
-						<div className='box-container personal-details-box'>
-							{ experience.length === 0 && <p>Δεν υπάρχουν καταχωρημένα στοιχεία</p>}
-							<div className='show-items'>
-								{experience.map((exp, index) => (
-									<div key={index} className='bubble-container'>
-										<p className='company'>{exp.company}</p>
-										<p className='role'>{exp.role}</p>
-										<p className='years'>{exp.startYear} - {exp.endYear}</p>
-									</div>
-								))}
-							</div>
-						</div>
+						<Skills skills={skills} />
+						<Education education={education} />
+						<Experience experience={experience} />
 					</div>
 				</div>
 			)}

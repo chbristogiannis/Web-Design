@@ -9,13 +9,13 @@ function WelcomePage() {
         <nav className="navbar">
           <h1 className="brand">Professional Network</h1>
           <div className="nav-links">
-            <button onClick={() => window.location.href = '/register'}>Register</button>
-            <button onClick={() => window.location.href = '/login'}>Login</button>
+            <button onClick={() => window.location.href = '/register'}>Εγγραφή</button>
+            <button onClick={() => window.location.href = '/login'}>Σύνδεση</button>
           </div>
         </nav>
         <main className="welcome-content">
-          <h2>Welcome to the Professional Networking Application</h2>
-          <p>Connect with professionals, share your experiences, and grow your career.</p>
+          <h2>Καλώς ορίσατε στην Εφαρμογή Επαγγελματικής Δικτύωσης</h2>
+          <p>Συνδεθείτε με επαγγελματίες, μοιραστείτε τις εμπειρίες σας και αναπτύξτε την καριέρα σας.</p>
         </main>
       </div>
     </div>
