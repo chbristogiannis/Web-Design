@@ -51,7 +51,7 @@ const getUsersDataJSON = async (selectedUsers) => {
 
 const createDummyData = async () => {
     try {
-        const response = await axiosInstance.post('/post/dummy');
+        const response = await axiosInstance.post('/admin/dummy');
         return response.data;
     } catch (error) {
         throw new Error(error.response.data.message);

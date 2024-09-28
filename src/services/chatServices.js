@@ -2,7 +2,7 @@ import axiosInstance from '../utils/axiosInstance';
 
 const fetchChats = async () => {
     try {
-        const response = await axiosInstance.get('/chat/');
+        const response = await axiosInstance.get('/chats/');
 
         return response.data;
     } catch (error) {
@@ -15,7 +15,7 @@ const fetchChats = async () => {
 
 const fetchChatMessages = async (chatId) => {
     try {
-        const response = await axiosInstance.get(`/chat/${chatId}/messages`);
+        const response = await axiosInstance.get(`/chats/${chatId}/messages`);
 
         return response.data;
     } catch (error) {
@@ -28,7 +28,7 @@ const fetchChatMessages = async (chatId) => {
 
 const createChat = async (friendId) => {
     try {
-        const response = await axiosInstance.post('/chat/', {
+        const response = await axiosInstance.post('/chats/', {
             friendId
         });
 
@@ -43,7 +43,7 @@ const createChat = async (friendId) => {
 
 const createMessage = async (chatId, content) => {
     try {
-        const response = await axiosInstance.post(`/chat/${chatId}/messages`, {
+        const response = await axiosInstance.post(`/chats/${chatId}/messages`, {
             content
         });
 

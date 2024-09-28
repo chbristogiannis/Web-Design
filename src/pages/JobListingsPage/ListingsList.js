@@ -59,7 +59,7 @@ const ListingsList = ({ updatedListings, user, showMyListings }) => {
         if (!seenListings.has(listingId)) {
             try {
                 await markListingAsSeen(listingId); // Backend call to mark as seen
-                setSeenListings((prev) => new Set(prev).add(listingId)); // Add to the seen set
+                await setSeenListings((prev) => new Set(prev).add(listingId)); // Add to the seen set
             } catch (error) {
                 console.error('Error marking listing as seen', error);
             }

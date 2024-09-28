@@ -2,7 +2,7 @@ import axiosInstance from '../utils/axiosInstance';
 
 const getPosts = async () => {
     try {
-        const response = await axiosInstance.get('post/suggestedPosts');
+        const response = await axiosInstance.get('posts/');
 
         return response.data;
     } catch (error) {
@@ -20,7 +20,7 @@ const createPost = async (content) => {
             formDataObj.append('file', content.file);
         }
 
-        const response = await axiosInstance.post('post/createPost', formDataObj, {
+        const response = await axiosInstance.post('posts/', formDataObj, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             }
@@ -38,7 +38,7 @@ const likePost = async (postId) => {
             throw new Error('Invalid postId');
         }
 
-        const response = await axiosInstance.post(`post/${postId}/likePost` );
+        const response = await axiosInstance.post(`posts/${postId}/like` );
 
         return response.data;
     } catch (error) {
@@ -58,7 +58,7 @@ const commentPost = async (postId, commentText) => {
             throw new Error('Invalid postId or commentText');
         }
 
-        const response = await axiosInstance.post(`post/${postId}/comment`, {
+        const response = await axiosInstance.post(`posts/${postId}/comment`, {
             text: commentText,
         });
 
@@ -76,7 +76,7 @@ const getPostComments = async (postId) => {
             throw new Error('Invalid postId');
         }
 
-        const response = await axiosInstance.get(`post/${postId}/getPostsComments`);
+        const response = await axiosInstance.get(`posts/${postId}/comments`);
 
         return response.data;
     } catch (error) {
@@ -92,7 +92,7 @@ const removeLike = async (postId) => {
             throw new Error('Invalid postId');
         }
 
-        const response = await axiosInstance.delete(`post/${postId}/unLikePost`);
+        const response = await axiosInstance.delete(`posts/${postId}/like`);
 
         return response.data;
     } catch (error) {

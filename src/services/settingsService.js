@@ -2,7 +2,7 @@ import axiosInstance from '../utils/axiosInstance';
 
 const changePassword = async (data) => {
     try {
-        const response = await axiosInstance.put('/users/change-password', data);
+        const response = await axiosInstance.put('/users/password', data);
         return response.data;
     } catch (error) {
         return Promise.reject(error);
@@ -11,7 +11,7 @@ const changePassword = async (data) => {
 
 const changeEmail = async (data) => {
     try {
-        const response = await axiosInstance.put('/users/change-email', data);
+        const response = await axiosInstance.put('/users/email', data);
         return response.data;
     } catch (error) {
         return Promise.reject(error);
