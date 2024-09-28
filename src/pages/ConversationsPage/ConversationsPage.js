@@ -3,13 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../context/AuthContext';
 
-import AutoResizingTextArea from '../../components/AutoResizingTextArea/AutoResizingTextArea';  // Adjust the import path
+import Navbar from '../../components/NavBar/NavBar';
+import ConversationsList from './ConversationsList';
+import Conversation from './Conversation';
 
-import { fetchChats, fetchChatMessages, createMessage } from '../../services/chatServices';
+import { fetchChats, fetchChatMessages } from '../../services/chatServices';
 
 import './ConversationsPage.css';
 
-import Navbar from '../../components/NavBar/NavBar';
 
 function ConversationsPage() {
 	const [conversations, setConversations] = useState([]);
@@ -19,7 +20,6 @@ function ConversationsPage() {
 	const [friendUser, setFriendUser] = useState('');
 	
 	const [messages, setMessages] = useState([]);
-	const [newMessage, setNewMessage] = useState('');
 	const { conversationId } = useParams(); // Get conversationId from URL
 	const navigate = useNavigate(); // Use for navigation
 	
@@ -76,8 +76,7 @@ function ConversationsPage() {
 
 	const handleSelectConversation = async (conversationId) => {
 		// Navigate to the selected conversation's page
-
-		const tempname = async () => { 
+		const navigateToSelectedConversation = async () => { 
 			setMessages([]);
 			navigate(`/ConversationsPage/${conversationId}`);
 
@@ -108,124 +107,28 @@ function ConversationsPage() {
 			}
 		};
 
-		await tempname();
-	};
-
-	useEffect(() => {
-		if (conversations) {
-			if (!conversationId) {
-				setFriendUser('');
-				return;
-			}
-			handleSelectConversation(parseInt(conversationId, 10));
-		} else {
-			setFriendUser('');
-		}
-	}, [conversationId]); // Depend on conversationId to load messages when URL changes
-
-
-	const handleSendMessage = async () => {
-		if (newMessage.trim()) {
-			try {
-				const newMessageObject = await createMessage(conversationId, newMessage);
-				if (!newMessageObject) {
-					return;
-				}
-
-				const mappedMessageObject = {
-					id: newMessageObject.id,
-					userId: newMessageObject.userId,
-					content: newMessageObject.content,
-					updatedAt: new Date(newMessageObject.updatedAt).toLocaleString('el-GR', options)
-				};
-
-				setMessages([...messages, mappedMessageObject]);
-
-			} catch (error) {
-				console.error(error);
-			}
-
-			setNewMessage('');
-		}
+		await navigateToSelectedConversation();
 	};
 
 	return (
 		<div className="conversations-page">
 			<Navbar />
 			<div className="conversation-section">
-				<div className="conversations-list">
-					<h3>Οι συζητήσεις σας:</h3>
-					<ul>
-						{conversations.map((conversation) => (
-							<li
-								key={conversation.id}
-								onClick={() => handleSelectConversation(conversation.id)}
-								className={conversation.id === parseInt(conversationId, 10) ? 'active' : ''}
-							>
-								{ conversation.friend.userPhoto 
-								? <img src={conversation.friend.userPhoto} alt="profile" className='micro-profile-picture'/>
-								: <img src='https://via.placeholder.com/100' alt="profile" className='micro-profile-picture'/> 
-								}
-								<div className='list-item'>
-									<p>{conversation.friend.userFirstName} {conversation.friend.userLastName}</p>
-									<span>{conversation.updatedAt}</span>
-								</div>
-							</li>
-						))}
-					</ul>
-					{conversations.length === 0 && (<span>Δεν υπάρχουν συνομιλίες</span>)}
-				</div>
-
-				<div className="messages-section">
-				<h3>{friendUser && (friendUser.userFirstName + ' ' + friendUser.userLastName)}</h3>
-					
-					{conversationId ? (
-						<div className="messages-list">
-						{messages.map((message) => (
-							<div
-								key={message.id}
-								className={`message-item ${message.userId === user.id ? 'self' : 'other'} box-container`}
-								>
-								{(message.userId === user.id && user.photo) && (<img src={user.photo} alt="profPicture" className='micro-profile-picture'/>)}
-								{(message.userId === user.id && !user.photo) && (<img src={'https://via.placeholder.com/100'} alt="profPicture" className='micro-profile-picture'/>)}
-								{(message.userId !== user.id && friendUser.userPhoto) && (<img src={friendUser.userPhoto} alt="profPicture" className='micro-profile-picture'/>)}
-								{(message.userId !== user.id && !friendUser.userPhoto) && (<img src={'https://via.placeholder.com/100'} alt="profPicture" className='micro-profile-picture'/>)}
-								<div className='message'> 
-									<p>{message.content}</p>
-									<span>{message.updatedAt}</span>
-								</div>
-							</div>
-						))}
-						</div>
-					) : (
-						<p style= {{
-							fontSize: '1.5rem',
-							color: 'var(--secondary-text-color)',
-							height: '100%',
-							textAlign: 'center',
-						}}>Διαλέξτε συζήτηση</p> // Shown when no conversation is selected
-					)}
-
-					{conversationId && ( 
-						<div className="message-input">
-							<AutoResizingTextArea
-								value={newMessage}
-								onChange={(e) => setNewMessage(e.target.value)}
-								placeholder="Aa"
-								onFocus={(event) => event.target.placeholder = ''}
-								onBlur={(event) => event.target.placeholder = 'Aa'}
-								style={{
-									padding: '0.5rem',
-									height: 'auto',
-									maxHeight: '7rem',
-								}}
-							/>
-							<button onClick={handleSendMessage} className='custom-button' style= {{
-								maxHeight: '3rem',
-							}}>Αποστολή</button>
-						</div>
-					)}
-				</div>
+				<ConversationsList
+					conversations={conversations}
+					conversationId={conversationId}
+					handleSelectConversation={handleSelectConversation}
+				/>
+				<Conversation
+					messages={messages}
+					setMessages={setMessages}
+					conversations={conversations}
+					conversationId={conversationId}
+					friendUser={friendUser}
+					setFriendUser={setFriendUser}
+					user={user}
+					handleSelectConversation={handleSelectConversation}
+				/>
 			</div>
 		</div>
 	);
