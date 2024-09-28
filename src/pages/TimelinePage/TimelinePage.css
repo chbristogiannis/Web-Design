@@ -120,6 +120,10 @@
 		border: 1px solid var(--container-border-color);
 		border-radius: 1rem;
 
+		span { 
+			word-wrap: break-word;
+		}
+
 		.comment-user-container {
 			display: flex;
 			gap: .5rem;
