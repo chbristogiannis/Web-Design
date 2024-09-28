@@ -8,6 +8,9 @@ import Spinner from '../../components/Spinner/Spinner';
 import { fetchNotifications, deleteNotification } from '../../services/notificationsServices';
 import './NotificationsPage.css';
 
+import FriendRequests from './FriendRequests';
+import Interactions from './Interactions';
+
 function NotificationsPage() {
 	const [interactions, setInteractions] = useState([]);
 	const [friendRequests, setFriendRequests] = useState([]);
@@ -21,8 +24,6 @@ function NotificationsPage() {
 		const getNotifications = async () => {
 			try {
 				const notifications = await fetchNotifications();
-				console.log(notifications.friendRequests);
-				console.log(notifications.likesAndComments);
 
 				//map time to readable format
 				if (!notifications || !notifications.likesAndComments || !notifications.friendRequests) {
@@ -58,7 +59,6 @@ function NotificationsPage() {
 	}, []);
 
 	const handleViewProfile = (userId) => {
-		console.log('View profile:', userId);
 		navigate(`/UserProfilePage/${userId}`);
 	}
 
@@ -84,26 +84,14 @@ function NotificationsPage() {
 			<div className="notification-section">
 				<h3>Αιτήματα σύνδεσης</h3>
 				<div className="box-container notification-container">
-					{loading ? 
-						<Spinner /> :
-						<div>
-							{friendRequests.length > 0 ? (
-								<ul>
-								{friendRequests.map((request) => (
-									<li key={request.notificationId}>
-										{ request.profilePicture ? <img src={request.profilePicture} alt='profile' className='mini-profile-picture' onClick={() => handleViewProfile(request.userId)} style={{cursor:"pointer"}}/> : <img src='https://via.placeholder.com/100' className='mini-profile-picture'  onClick={() => handleViewProfile(request.userId)} style={{cursor:"pointer"}}/> }
-										<p className='notification-text'>{request.firstName} {request.lastName} σας έχει στείλει ένα αίτημα σύνδεσης </p>
-										<span className='date-span'>{request.createdAt}</span>
-										<button className="custom-button"  onClick={() => handleViewProfile(request.userId)} >Προβολή Προφίλ</button>
-										<button className='delete-button' onClick={() => handleDeleteNotification(request)}>x</button>
-									</li>
-								))}
-								</ul>
-							) : (
-								!loading &&
-								<p className='notification-text'>Δεν έχετε αιτήματα σύνδεσης</p>
-							)}
-						</div>
+					{loading 
+					? 	<Spinner /> 
+					:	<FriendRequests 
+							friendRequests={friendRequests} 
+							loading={loading} 
+							handleDeleteNotification={handleDeleteNotification} 
+							handleViewProfile={handleViewProfile}
+						/>
 					}
 				</div>
 			</div>
@@ -112,34 +100,13 @@ function NotificationsPage() {
 				<h3>Ειδοποιήσεις ενδιαφέροντος και σχολίων</h3>
 				<div className="box-container notification-container">
 					{loading 
-						? <Spinner/> : 
-						<div>
-							{interactions.length > 0 ? (
-								<ul>
-								{interactions.map((interaction) => (
-									<li key={interaction.notificationId}>
-										{ interaction.profilePicture ? 
-											<img src={interaction.profilePicture} alt='profile' className='mini-profile-picture' onClick={() => handleViewProfile(interaction.userId)} style={{cursor:"pointer", width:"fitContent", minWidth:"3rem"}}/> 
-											: 
-											<img src='https://via.placeholder.com/100' className='mini-profile-picture' onClick={() => handleViewProfile(interaction.userId)} style={{cursor:"pointer", width:"fitContent", minWidth:"3rem"}}/> }
-										{interaction.type === 'like' 
-											&& <p className='notification-text'>{interaction.firstName} {interaction.lastName} σημείωσε το ενδιαφέρον του σε μία από τις αναρτήσεις σας</p>}
-										{interaction.type === 'comment' 
-											&& <div style={{flex:"1"}}>
-												<p className='notification-text'>{interaction.firstName} {interaction.lastName} σχολίασε σε μία από τις αναρτήσεις σας: </p>
-												<p className='comment-container'>{interaction.commentContent}</p>
-											</div>
-										}
-										<span className='date-span'>{interaction.createdAt}</span>
-										<button className='delete-button' onClick={() => handleDeleteNotification(interaction)}>x</button>
-									</li>
-								))}
-								</ul>
-							) : (
-								!loading &&
-								<p className='notification-text'>Δεν έχετε κάποια νέα ειδοποίηση</p>
-							)}
-						</div>
+					? 	<Spinner/> 
+					:	<Interactions 
+							interactions={interactions} 
+							handleDeleteNotification={handleDeleteNotification} 
+							handleViewProfile={handleViewProfile} 
+							loading={loading}
+						/>
 					}
 				</div>
 			</div>
