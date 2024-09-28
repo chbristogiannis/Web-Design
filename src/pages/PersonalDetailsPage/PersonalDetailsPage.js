@@ -2,9 +2,9 @@
 import React from 'react';
 import './PersonalDetailsPage.css';
 import Navbar from '../../components/NavBar/NavBar';
-import Experience from '../../components/ExperienceContainer/ExperienceContainer';
-import Education from '../../components/EducationContainer/EducationContainer';
-import Skill from '../../components/SkillContainer/SkillContainer';
+import Experience from './ExperienceContainer';
+import Education from './EducationContainer';
+import Skill from './SkillContainer';
 
 
 const PersonalDetailsPage = () => {

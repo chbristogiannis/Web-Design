@@ -2,8 +2,8 @@
 import React, { useContext} from 'react';
 
 import Navbar from '../../components/NavBar/NavBar';  // Adjust the import path
-import ChangeEmail from '../../components/UpdateEmail';
-import ChangePassword from '../../components/UpdatePassword';
+import ChangeEmail from './UpdateEmail';
+import ChangePassword from './UpdatePassword';
 import AuthContext from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 import './SettingsPage.css';

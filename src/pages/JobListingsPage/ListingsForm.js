@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createListing } from '../../services/listingServices';
-import AutoResizingTextArea from '../AutoResizingTextArea/AutoResizingTextArea';
+import AutoResizingTextArea from '../../components/AutoResizingTextArea/AutoResizingTextArea';
 
 import './ListingsForm.css';
 

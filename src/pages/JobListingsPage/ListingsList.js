@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ListingsList.css';
 import { applyToListing, fetchListingApplicants, markListingAsSeen } from '../../services/listingServices';
-import ListingsApplicants from '../ListingsApplicants/ListingsApplicants';
+import ListingsApplicants from './ListingsApplicants';
 import ListingItem from './ListingItem'; // Import the new ListingItem component
 
 const ListingsList = ({ updatedListings, user, showMyListings }) => {

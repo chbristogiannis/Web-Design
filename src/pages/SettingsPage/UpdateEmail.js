@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { changeEmail as changeEmailService} from '../services/settingsService';
+import { changeEmail as changeEmailService} from '../../services/settingsService';
 
 const ChangeEmail = () => {
     const [email, setEmail] = useState('');

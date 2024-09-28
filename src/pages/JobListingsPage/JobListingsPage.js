@@ -5,8 +5,8 @@ import { fetchListings } from '../../services/listingServices';
 import Navbar from '../../components/NavBar/NavBar';
 import { useAuth } from '../../context/AuthContext';
 
-import ListingsForm from '../../components/ListingsForm/ListingsForm';
-import ListingsList from '../../components/ListingsList/ListingsList';
+import ListingsForm from './ListingsForm';
+import ListingsList from './ListingsList';
 
 function JobListingsPage() {
     const { user, isAuthenticated, loading: authLoading } = useAuth();
