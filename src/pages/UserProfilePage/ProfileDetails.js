@@ -68,7 +68,6 @@ const ProfileDetails = ({
 				return;
 			}
 			const newChat = await createChat(id);
-			// console.log("created chat", newChat);
 			navigate(`/ConversationsPage/${newChat.id}`);
 		} catch (error) {
 			console.error(error);

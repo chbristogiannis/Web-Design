@@ -5,7 +5,7 @@ import {
     getExperienceService, 
     updateExperienceService,
     deleteExperienceService
-} from '../../services/personalDetailsServices'; // Adjust path as needed
+} from '../../services/personalDetailsServices';
 
 const Experience = () => {
     const [experiences, setExperiences] = useState([]);

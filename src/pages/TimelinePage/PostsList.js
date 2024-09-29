@@ -197,9 +197,9 @@ const PostList = ({user, posts, setPosts}) => {
                         )}
                     </div>
                     <div className="post-actions">
-                        { post.likedByUser ? <button className="custom-button" onClick={() => handleRemoveLike(post.id)}>Αφαίρεση Ενδιαφέροντος</button> :
-                        <button className="like-button" onClick={() => handleLike(post.id)}>Ενδιαφέρον</button>}
-                        <button className="like-button" 
+                        { post.likedByUser ? <button className="like-button" onClick={() => handleRemoveLike(post.id)}>Αφαίρεση Ενδιαφέροντος</button> :
+                        <button className="custom-button" onClick={() => handleLike(post.id)}>Ενδιαφέρον</button>}
+                        <button className="custom-button" 
                             onClick={() => handleCommentClick(post.id)}>Σχόλια</button>
                     </div>
                     { commentFocus === post.id ? 

@@ -20,7 +20,6 @@ function NotificationsPage() {
 	const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
 
 	useEffect(() => {
-		// Simulate fetching connection requests with dummy data
 		const getNotifications = async () => {
 			try {
 				const notifications = await fetchNotifications();

@@ -3,7 +3,7 @@ import useVisibilityObserver from '../../hooks/useVisibilityObserver';
 
 const ListingItem = ({ listing, user, onListingSeen, handleApply, handleViewApplications }) => {
     const [ref, isVisible] = useVisibilityObserver({
-        threshold: 0.5, // Adjust this value to control when the listing is considered visible
+        threshold: 0.5, // Adjust value to control when the listing is considered visible
     });
 
     useEffect(() => {

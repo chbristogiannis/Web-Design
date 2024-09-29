@@ -24,7 +24,7 @@ const getUsersDataXML = async (selectedUsers) => {
             usersId: selectedUsers 
         }, {
             headers: {
-                'Accept': 'application/xml'  // Ensure the backend knows you're expecting XML
+                'Accept': 'application/xml'
             },
             responseType: 'text'  // Force axios to return the response as plain text (XML)
         });

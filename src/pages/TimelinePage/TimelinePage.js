@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/NavBar/NavBar';  // Adjust the import path
 import Spinner from '../../components/Spinner/Spinner'; // Import the Spinner component
 
-import {  getPosts, likePost, commentPost, getPostComments, removeLike as removeLikeService } from '../../services/postServices';
-
 import SideProfile from './SideProfile';
 import PostCreation from './PostCreation';
 import PostList from './PostsList';

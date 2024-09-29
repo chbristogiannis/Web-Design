@@ -1,11 +1,11 @@
 // src/SettingsPage.js
 import React, { useContext} from 'react';
 
-import Navbar from '../../components/NavBar/NavBar';  // Adjust the import path
+import Navbar from '../../components/NavBar/NavBar';
 import ChangeEmail from './UpdateEmail';
 import ChangePassword from './UpdatePassword';
 import AuthContext from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
+import { useNavigate } from 'react-router-dom';
 import './SettingsPage.css';
 
 function SettingsPage() {

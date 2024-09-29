@@ -49,8 +49,6 @@ const PostCreation = ({user, setPosts}) => {
 					return;
 				}
 
-				console.log(response);
-
 				setPosts(prevPosts => [
 					{
 						id: response.id,

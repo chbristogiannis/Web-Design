@@ -40,10 +40,10 @@ const AdminPage = () => {
 		const fetchDummyData = async () => {
 			try {
 				setLoading(true);
-				await createDummyData(); // Assuming this function makes the request
+				await createDummyData();
 
-				// Refresh the user list after creating dummy data
 				const data = await getAllUsers();
+				// Refresh the user list after creating dummy data
 				setUsers(data);
 				setLoading(false);
 			} catch (error) {
